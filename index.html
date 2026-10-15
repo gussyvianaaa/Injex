@@ -2,645 +2,624 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="color-scheme" content="light">
-  <title>Injex Studio | Gerador de Cardápios</title>
-  <style id="pageRules">@page { size: A4; margin: 12mm; }</style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Injex Studio 3.0 | Cardápios para impressão</title>
+  <style id="printPage">@page { size: A4 portrait; margin: 0; }</style>
   <style>
-    /* =========================================================
-       INJEX STUDIO — VARIÁVEIS E ESTRUTURA
-       Edite os estilos dos cardápios na seção "MODELOS".
-       ========================================================= */
-    :root {
-      --ui-bg: #f3f5f9;
-      --ui-ink: #192439;
-      --ui-soft: #637089;
-      --ui-border: #dfe5ed;
-      --ui-brand: #222b45;
-      --accent: #b76b3a;
-    }
-
+    /* ========= 01. INTERFACE DO EDITOR ========= */
+    :root { font-family: Inter, 'Segoe UI', Arial, sans-serif; color: #18243a; background: #eff2f7; }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--ui-bg); color: var(--ui-ink); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+    body { margin: 0; }
     button, input, select, textarea { font: inherit; }
     button { cursor: pointer; }
     button:disabled { opacity: .45; cursor: not-allowed; }
-    input, select, textarea { width: 100%; padding: 11px 12px; background: #fff; border: 1px solid #cfd7e2; border-radius: 10px; color: #1b2940; }
-    textarea { resize: vertical; min-height: 72px; }
-    input[type="color"] { padding: 3px; height: 44px; }
-    input[type="checkbox"] { width: auto; accent-color: #283650; }
-    input:focus, textarea:focus, select:focus { outline: 2px solid #bdcdec; outline-offset: 1px; }
-    label { font-size: 12px; color: #3b4a60; font-weight: 750; display: block; margin: 11px 0 5px; }
-    .topbar { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; justify-content: space-between; padding: 14px 22px; background: #121c30; color: white; }
-    .brand { display: flex; align-items: center; gap: 12px; }
-    .brand-mark { background: #dca36f; color: #1e2632; width: 43px; height: 43px; display: grid; place-items: center; border-radius: 12px; font-size: 23px; }
-    .brand strong { display: block; letter-spacing: .5px; font-size: 18px; }
-    .brand small { color: #b6c5da; display: block; margin-top: 2px; }
-    .top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-    .btn { border: 1px solid #d2dae6; border-radius: 10px; background: white; color: #21314b; font-size: 13px; font-weight: 750; padding: 10px 13px; transition: .15s ease; }
-    .btn:hover { filter: brightness(.95); transform: translateY(-1px); }
-    .btn.primary { background: #f1bd81; color: #19253a; border-color: #f1bd81; }
-    .btn.dark { background: #273651; color: white; border-color: #273651; }
-    .btn.red { color: #ae2636; }
-    .btn.tiny { font-size: 12px; padding: 7px 9px; }
-    .app { max-width: 1850px; margin: 0 auto; display: grid; grid-template-columns: minmax(340px, 455px) minmax(0, 1fr); gap: 18px; padding: 18px; align-items: start; }
-    .editor { position: sticky; top: 15px; max-height: calc(100vh - 95px); overflow: auto; padding: 18px; }
-    .panel { background: #fff; border: 1px solid var(--ui-border); border-radius: 18px; box-shadow: 0 6px 25px #1c355012; }
-    .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 5px; background: #eef2f7; border-radius: 13px; margin: 16px 0 19px; }
-    .tab { border: 0; padding: 10px 4px; border-radius: 10px; background: transparent; color: #5d6a80; font-size: 12px; font-weight: 850; }
-    .tab.active { color: #1e2e48; background: #fff; box-shadow: 0 2px 10px #25314915; }
+    input, select, textarea { width: 100%; border: 1px solid #d2dbe8; border-radius: 10px; padding: 10px; background: white; color: #18243a; }
+    input[type="color"] { height: 41px; padding: 3px; }
+    input[type="checkbox"] { width: auto; }
+    textarea { min-height: 75px; resize: vertical; }
+    label { display: block; font-weight: 650; font-size: 12px; margin: 11px 0 5px; color: #44546b; }
+    .top { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; background: #101b30; color: white; padding: 14px 20px; }
+    .brand { font-size: 19px; font-weight: 900; letter-spacing: -.03em; }
+    .brand small { display: block; font-size: 11px; font-weight: 450; letter-spacing: .02em; opacity: .7; }
+    .actions, .inline { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+    .btn { background: #fff; color: #24334e; border: 1px solid #d5ddec; border-radius: 9px; padding: 10px 12px; font-size: 12px; font-weight: 700; }
+    .btn:hover { filter: brightness(.95); }
+    .btn.primary { background: #f2ad49; border-color: #f2ad49; color: #182037; }
+    .btn.dark { background: #24344f; border-color: #24344f; color: white; }
+    .btn.danger { color: #a52737; }
+    .btn.small { padding: 6px 9px; font-size: 11px; }
+    .app { display: grid; grid-template-columns: minmax(320px, 395px) minmax(0, 1fr); gap: 14px; max-width: 1640px; margin: auto; padding: 14px; align-items: start; }
+    .panel { background: #fff; border: 1px solid #dce3ed; border-radius: 16px; box-shadow: 0 6px 22px #192c4d0b; }
+    .sidebar { padding: 16px; position: sticky; top: 10px; max-height: calc(100vh - 20px); overflow-y: auto; }
+    .sidebar h2, .stage h2 { margin: 0 0 5px; font-size: 18px; }
+    .hint { color: #6d7a8c; font-size: 12px; line-height: 1.5; }
+    .tabs { display: flex; gap: 4px; margin: 16px 0; background: #eef2f8; padding: 4px; border-radius: 10px; }
+    .tab { flex: 1; border: 0; background: transparent; font-size: 11px; font-weight: 800; padding: 10px 3px; border-radius: 8px; color: #66768b; }
+    .tab.active { background: white; color: #18243a; box-shadow: 0 1px 5px #1d33551a; }
     .pane { display: none; }
     .pane.active { display: block; }
-    .section-title { font-size: 15px; margin: 18px 0 5px; font-weight: 850; }
-    .hint { color: #768298; font-size: 12px; line-height: 1.55; margin: 7px 0 12px; }
-    .fields-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-    .fields-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
-    .divider { height: 1px; background: #edf0f4; margin: 17px 0; }
-    .inline-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-    .control-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
-    .switch-line { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #39485c; }
-    .category-box { background: #f9fafc; border: 1px solid #e2e7ef; border-radius: 13px; padding: 12px; margin: 13px 0; }
-    .category-head { display: flex; align-items: center; gap: 8px; }
-    .category-head input { font-weight: 850; flex: 1; min-width: 0; }
-    .product-box { background: white; border-radius: 10px; border: 1px solid #e7ebf2; padding: 11px; margin: 9px 0; }
-    .product-name { font-weight: 750; }
-    .model-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .model-button { text-align: left; padding: 8px; border: 2px solid #e3e8f0; border-radius: 12px; background: white; }
-    .model-button.selected { border-color: #243551; background: #f4f7fc; }
-    .model-button strong { display: block; font-size: 12px; padding: 7px 3px 2px; }
-    .model-button span { color: #68768b; font-size: 11px; padding: 0 3px; }
-    .model-thumb { height: 82px; border-radius: 7px; padding: 11px; overflow: hidden; background: var(--thumb-bg); color: var(--thumb-text); }
-    .model-thumb::before { content: "SABOR & ARTE"; display: block; font: 900 13px Georgia, serif; text-align: center; border-bottom: 2px solid var(--thumb-accent); padding-bottom: 6px; }
-    .model-thumb::after { content: "ESPECIAL DA CASA          39,90\A Ingredientes selecionados"; display: block; white-space: pre; font-size: 7px; line-height: 2.3; margin-top: 5px; }
-    .workspace { min-width: 0; }
-    .workspace-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 12px 14px; gap: 9px; }
-    .workspace-heading h2 { margin: 0; font-size: 15px; }
-    .workspace-heading p { margin: 4px 0 0; font-size: 12px; color: #758197; }
-    .workspace-body { display: flex; justify-content: center; padding: 28px 20px 50px; background: #dfe5ec; overflow-x: auto; border-radius: 0 0 18px 18px; min-height: 740px; }
-    .paper-frame { flex: 0 0 auto; width: min(100%, 794px); }
-
-    /* =========================================================
-       ÁREA DO CARDÁPIO (TAMBÉM USADA NO PDF)
-       ========================================================= */
-    .menu { --menu-bg: #fff; --menu-ink: #272b35; --menu-muted: #667085; --menu-accent: #b76b3a; --menu-font: Georgia, serif; --menu-title: Georgia, serif; background: var(--menu-bg); color: var(--menu-ink); font-family: var(--menu-font); padding: 15mm 14mm; width: 100%; min-height: 280mm; box-shadow: 0 7px 25px #26354b2b; position: relative; overflow-wrap: anywhere; }
-    .menu::before { content: ""; position: absolute; inset: 0; pointer-events: none; }
-    .menu-content { position: relative; z-index: 1; }
-    .menu-header { text-align: center; margin-bottom: 32px; break-inside: avoid; page-break-inside: avoid; }
-    .menu-logo { display: block; margin: 0 auto 15px; max-width: 120px; max-height: 95px; object-fit: contain; }
-    .menu-title { font-family: var(--menu-title); font-size: var(--title-size, 35px); font-weight: 800; letter-spacing: .03em; line-height: 1.15; margin: 0; }
-    .menu-subtitle { color: var(--menu-muted); font-size: 13px; margin: 10px 0; letter-spacing: .14em; text-transform: uppercase; }
-    .menu-separator { width: 75px; height: 3px; margin: 14px auto 0; background: var(--menu-accent); }
-    .menu-category { margin: 25px 0 0; }
-    .menu-category h2 { color: var(--menu-accent); font-family: var(--menu-title); font-size: var(--category-size, 23px); font-weight: 900; letter-spacing: .045em; text-transform: uppercase; border-bottom: 1px solid var(--menu-accent); padding-bottom: 8px; margin: 0 0 13px; break-after: avoid; page-break-after: avoid; }
-    .menu-product { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; break-inside: avoid; page-break-inside: avoid; }
-    .menu-product-main { flex: 1; min-width: 0; }
-    .menu-product-name { font-size: var(--item-size, 16px); font-weight: 800; margin-bottom: 5px; }
-    .menu-product-description { font-size: var(--desc-size, 12px); line-height: 1.6; color: var(--menu-muted); white-space: pre-line; }
-    .menu-product-price { color: var(--menu-accent); font-size: var(--item-size, 16px); font-weight: 900; white-space: nowrap; padding-top: 1px; }
-    .menu-footer { margin-top: 36px; text-align: center; font-size: 11px; line-height: 1.7; color: var(--menu-muted); padding-top: 14px; border-top: 1px solid var(--menu-accent); break-inside: avoid; }
-    [contenteditable="true"] { outline-offset: 2px; border-radius: 3px; }
-    [contenteditable="true"]:focus { outline: 2px dashed var(--menu-accent); }
-
-    /* =========================================================
-       MODELOS — 8 IDENTIDADES VISUAIS
-       ========================================================= */
-    .menu[data-model="1"] { --menu-bg: #fffdfa; --menu-ink: #302820; --menu-muted: #77695f; --menu-accent: #b56b3c; --menu-font: Georgia, serif; --menu-title: Georgia, serif; }
-    .menu[data-model="2"] { --menu-bg: #101920; --menu-ink: #f6edda; --menu-muted: #c1b6a0; --menu-accent: #d6ac67; --menu-font: Georgia, serif; --menu-title: Georgia, serif; }
-    .menu[data-model="3"] { --menu-bg: #fff; --menu-ink: #202d3a; --menu-muted: #647486; --menu-accent: #3181a3; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: "Segoe UI", Arial, sans-serif; }
-    .menu[data-model="4"] { --menu-bg: #fdf1e3; --menu-ink: #4a2417; --menu-muted: #876958; --menu-accent: #d45527; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: Georgia, serif; }
-    .menu[data-model="5"] { --menu-bg: #f7f5ee; --menu-ink: #273b32; --menu-muted: #69796e; --menu-accent: #3f7455; --menu-font: Georgia, serif; --menu-title: Georgia, serif; }
-    .menu[data-model="6"] { --menu-bg: #fffafc; --menu-ink: #473446; --menu-muted: #8c7284; --menu-accent: #ae6d93; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: Georgia, serif; }
-    .menu[data-model="7"] { --menu-bg: #1a1717; --menu-ink: #fff3e2; --menu-muted: #bdaba1; --menu-accent: #ed6348; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: "Segoe UI", Arial, sans-serif; }
-    .menu[data-model="8"] { --menu-bg: #f8f8f6; --menu-ink: #151515; --menu-muted: #656565; --menu-accent: #151515; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: "Segoe UI", Arial, sans-serif; }
-    .menu[data-model="2"]::before, .menu[data-model="7"]::before { border: 1px solid var(--menu-accent); inset: 9mm; }
-    .menu[data-model="4"] .menu-title, .menu[data-model="7"] .menu-title { text-transform: uppercase; letter-spacing: .075em; }
-    .menu[data-model="5"] .menu-header::after { content: "✦ ✦ ✦"; color: var(--menu-accent); display: block; margin-top: 11px; }
-    .menu[data-model="6"] .menu-category h2 { text-align: center; border: 0; }
-    .menu[data-model="6"] .menu-category h2::after { content: ""; width: 70px; height: 1px; display: block; background: var(--menu-accent); margin: 8px auto 0; }
-    .menu[data-model="8"] .menu-separator { width: 100%; height: 1px; }
-    .menu[data-model="8"] .menu-category h2 { letter-spacing: .14em; }
-    .menu.two-columns .menu-items { columns: 2; column-gap: 24px; }
-    .menu.two-columns .menu-product { display: flex; break-inside: avoid; }
-    .menu.two-columns .menu-product-price { white-space: nowrap; }
-    .menu.compact .menu-product { padding: 5px 0; }
-    .menu.compact .menu-category { margin-top: 14px; }
-    .menu.show-divider .menu-product { border-bottom: 1px solid color-mix(in srgb, var(--menu-accent) 24%, transparent); }
-
-    /* =========================================================
-       RESPONSIVO E IMPRESSÃO
-       ========================================================= */
-    @media (max-width: 980px) {
-      .app { grid-template-columns: 1fr; }
-      .editor { position: static; max-height: none; }
-    }
-    @media (max-width: 540px) {
-      .app { padding: 9px; gap: 9px; }
-      .editor { padding: 12px; }
-      .topbar { padding: 12px; }
-      .workspace-body { padding: 10px 4px 20px; }
-      .menu { padding: 9mm 7mm; min-height: 0; }
-      .menu-title { font-size: 25px !important; }
-      .menu.two-columns .menu-items { columns: 1; }
-    }
+    .heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 17px 0 7px; font-size: 13px; font-weight: 850; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .divider { border-top: 1px solid #e6eaf0; margin: 18px 0; }
+    .category-edit { border: 1px solid #dce4ef; border-radius: 11px; padding: 10px; margin: 10px 0; background: #f8faff; }
+    .product-edit { border: 1px solid #e0e6f0; border-radius: 9px; padding: 9px; margin: 8px 0; background: white; }
+    .editbar { display: flex; gap: 5px; justify-content: flex-end; margin: 5px 0; }
+    .switch { display: flex; gap: 9px; align-items: center; font-size: 12px; margin: 12px 0; }
+    .model-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; }
+    .model-choice { text-align: left; border: 2px solid #dfe6ef; border-radius: 12px; background: white; padding: 8px; }
+    .model-choice.selected { border-color: #ea9a37; box-shadow: 0 0 0 2px #f3b05232; }
+    .model-art { display: grid; align-content: space-between; height: 79px; border-radius: 7px; padding: 10px; margin-bottom: 7px; overflow: hidden; }
+    .model-art b { font-size: 14px; }
+    .model-art span { height: 5px; border-radius: 9px; display: block; background: currentColor; opacity: .5; width: 68%; }
+    .model-choice strong { display: block; font-size: 12px; }
+    .model-choice small { color: #778399; font-size: 10px; }
+    .stage { min-width: 0; overflow: hidden; }
+    .stage-head { padding: 14px 18px; border-bottom: 1px solid #e6ecf3; display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 8px; }
+    .stage-head p { margin: 0; }
+    .preview-area { overflow: auto; background: #dfe5ed; padding: 24px 12px; min-height: 70vh; }
+    .page { margin: 0 auto 20px; width: var(--paper-w, 210mm); height: var(--paper-h, 297mm); background: white; box-shadow: 0 6px 24px #17213c36; overflow: hidden; position: relative; }
+    .page-label { position: absolute; bottom: 5px; right: 9px; background: #19283dcc; color: white; padding: 3px 7px; font: 10px Arial; z-index: 10; border-radius: 4px; }
+    .status { padding: 10px 15px; background: #f5f7fa; font-size: 12px; color: #637084; border-top: 1px solid #dfe6ed; }
+    .status.warning { background: #fff5dd; color: #80551d; }
+    /* ========= 02. BASE DOS CARDÁPIOS ========= */
+    .sheet { --paper: #fffcf6; --ink: #24252a; --muted: #6e6d71; --highlight: #be7446; --face: Georgia, serif; --headface: Georgia, serif; background: var(--paper); color: var(--ink); font: 13px/1.43 var(--face); height: 100%; width: 100%; padding: var(--inner, 12mm); position: relative; overflow: hidden; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+    .sheet::before, .sheet::after { pointer-events: none; }
+    .sheet-head { text-align: center; margin-bottom: 11mm; position: relative; z-index: 1; }
+    .logo { width: 27mm; height: 24mm; object-fit: contain; display: block; margin: 0 auto 4mm; }
+    .eyebrow { font-size: 10px; letter-spacing: .24em; text-transform: uppercase; color: var(--highlight); font-weight: 800; }
+    .sheet h1 { font: 700 var(--title-size, 34px)/1.08 var(--headface); margin: 3mm 0 1.6mm; overflow-wrap: anywhere; }
+    .subtitle { color: var(--muted); font-size: 12px; }
+    .category { break-inside: avoid; margin: 0 0 6mm; }
+    .category h2 { color: var(--highlight); font: 700 var(--category-size, 22px)/1.2 var(--headface); margin: 0 0 3mm; }
+    .product { break-inside: avoid; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 5mm; align-items: start; padding: 3mm 0; }
+    .product-info { min-width: 0; }
+    .product-name { font-size: var(--item-size, 15px); font-weight: 750; overflow-wrap: anywhere; }
+    .product-description { color: var(--muted); margin-top: 1mm; font-size: var(--desc-size, 11px); overflow-wrap: anywhere; }
+    .price { font-size: var(--item-size, 15px); font-weight: 850; white-space: nowrap; color: var(--highlight); }
+    .photo { float: left; width: 19mm; height: 18mm; object-fit: cover; margin: 0 3mm 2mm 0; border-radius: 6px; }
+    .tag { color: var(--highlight); font-size: 9px; font-weight: 850; display: inline-block; margin-left: 4px; }
+    .footer { margin-top: 8mm; border-top: 1px solid var(--highlight); padding-top: 4mm; text-align: center; font-size: 11px; color: var(--muted); white-space: pre-line; overflow-wrap: anywhere; }
+    .qr { width: 19mm; height: 19mm; display: block; margin: 3mm auto; }
+    .section-content { position: relative; z-index: 1; }
+    .sheet.compact .product { padding: 1.3mm 0; }
+    .sheet.compact .category { margin-bottom: 3mm; }
+    .sheet.columns .category:not(.no-columns) .items { column-count: 2; column-gap: 5mm; }
+    .sheet.columns .product { display: block; }
+    .sheet.columns .price { display: inline-block; padding-top: 1mm; }
+    .sheet.dividers .product { border-bottom: 1px solid color-mix(in srgb, var(--highlight) 28%, transparent); }
+    .sheet.no-photo .photo { display: none; }
+    /* ========= 03. QUINZE ESTILOS (ESTRUTURAS DISTINTAS) ========= */
+    .sheet[data-model="1"] { --paper:#fffcf6; --ink:#342d29; --muted:#786c65; --highlight:#a65b31; }
+    .sheet[data-model="1"] .sheet-head { border-top: 3px double var(--highlight); border-bottom: 3px double var(--highlight); padding: 6mm 0; }
+    .sheet[data-model="1"] .category h2 { border-bottom: 1px solid var(--highlight); padding-bottom: 2mm; }
+    .sheet[data-model="2"] { --paper:#14181c; --ink:#f7edda; --muted:#c3b9a8; --highlight:#d5ad62; border: 2.2mm solid #ad8b4c; }
+    .sheet[data-model="2"]::before { content:""; position:absolute; inset:4mm; border:1px solid #9d824e; }
+    .sheet[data-model="2"] .sheet-head { padding-top: 8mm; }
+    .sheet[data-model="2"] .category h2 { text-align:center; letter-spacing:.12em; text-transform:uppercase; }
+    .sheet[data-model="3"] { --paper:#fff; --ink:#223547; --muted:#677c91; --highlight:#2878a7; --face:Arial,sans-serif; --headface:Arial,sans-serif; }
+    .sheet[data-model="3"] .sheet-head { text-align:left; border-left:7px solid var(--highlight); padding-left:5mm; }
+    .sheet[data-model="3"] .logo { margin-left:0; }
+    .sheet[data-model="3"] .category h2 { background:var(--highlight); color:white; padding:2mm 3mm; }
+    .sheet[data-model="4"] { --paper:#fff0dc; --ink:#442518; --muted:#8c5940; --highlight:#db532b; --face:Arial,sans-serif; --headface:Impact,'Arial Black',sans-serif; }
+    .sheet[data-model="4"] .sheet-head { background:var(--highlight); color:white; margin:-12mm -12mm 9mm; padding:11mm 12mm 9mm; transform:skewY(-2deg); }
+    .sheet[data-model="4"] .sheet-head > * { transform:skewY(2deg); }
+    .sheet[data-model="4"] .eyebrow,.sheet[data-model="4"] .subtitle { color:#ffe9d4; }
+    .sheet[data-model="4"] .category h2 { text-transform:uppercase; letter-spacing:.04em; }
+    .sheet[data-model="5"] { --paper:#f2f3e7; --ink:#263d31; --muted:#687e6d; --highlight:#347c55; }
+    .sheet[data-model="5"]::before { content:""; position:absolute; width:75mm; height:75mm; border-radius:50%; background:#dbe6c2; right:-30mm; top:-30mm; }
+    .sheet[data-model="5"] .category { background:#ffffffa3; padding:4mm; border-radius:7mm 0 7mm 0; }
+    .sheet[data-model="6"] { --paper:#fff9fc; --ink:#513448; --muted:#a38398; --highlight:#b36891; --headface:Georgia,serif; }
+    .sheet[data-model="6"] .sheet-head { border:2px solid #eac5da; border-radius:55% 55% 12px 12px / 22% 22% 12px 12px; padding:7mm 3mm; }
+    .sheet[data-model="6"] .category h2 { text-align:center; font-style:italic; }
+    .sheet[data-model="6"] .product { border-bottom:1px dotted #ddb6ca; }
+    .sheet[data-model="7"] { --paper:#1d1919; --ink:#fff3df; --muted:#d2b8a5; --highlight:#f66b3d; --face:Arial,sans-serif; --headface:Impact,'Arial Black',sans-serif; }
+    .sheet[data-model="7"] .sheet-head { background:repeating-linear-gradient(-45deg,#e75a30,#e75a30 12px,#d34e2c 12px,#d34e2c 24px); color:white; padding:8mm; margin:-12mm -12mm 8mm; }
+    .sheet[data-model="7"] .eyebrow,.sheet[data-model="7"] .subtitle { color:#ffe3c9; }
+    .sheet[data-model="7"] .category h2 { text-transform:uppercase; border-left:5px solid var(--highlight); padding-left:3mm; }
+    .sheet[data-model="8"] { --paper:#fff; --ink:#151515; --muted:#747474; --highlight:#151515; --face:Arial,sans-serif; --headface:Arial,sans-serif; }
+    .sheet[data-model="8"] .sheet-head { text-align:left; margin-bottom:16mm; }
+    .sheet[data-model="8"] h1 { font-weight:900; letter-spacing:-.07em; }
+    .sheet[data-model="8"] .logo { margin-left:0; }
+    .sheet[data-model="8"] .category h2 { font-size:14px!important; text-transform:uppercase; letter-spacing:.3em; }
+    .sheet[data-model="8"] .product { border-top:1px solid #ddd; }
+    .sheet[data-model="9"] { --paper:#faf8f1; --ink:#29251f; --muted:#797064; --highlight:#82653a; --face:Georgia,serif; }
+    .sheet[data-model="9"] .sheet-head { text-align:left; border-bottom:5px solid var(--highlight); padding-bottom:5mm; }
+    .sheet[data-model="9"] .logo { margin-left:0; }
+    .sheet[data-model="9"] .category { display:grid; grid-template-columns:30% 1fr; gap:4mm; border-bottom:1px solid #c4b8a6; padding-bottom:4mm; }
+    .sheet[data-model="9"] .category h2 { font-style:italic; }
+    .sheet[data-model="10"] { --paper:#20262b; --ink:#f9f3eb; --muted:#b6b8b7; --highlight:#eeae37; --face:Arial,sans-serif; --headface:Impact,'Arial Black',sans-serif; }
+    .sheet[data-model="10"] .sheet-head { text-align:left; border-bottom:6px solid var(--highlight); }
+    .sheet[data-model="10"] .category h2 { background:#e9a22a; color:#20262b; transform:rotate(-1deg); padding:3mm 4mm; display:inline-block; }
+    .sheet[data-model="10"] .product { border-bottom:2px dashed #6e6552; }
+    .sheet[data-model="11"] { --paper:#eae5d8; --ink:#493827; --muted:#826e59; --highlight:#a55b43; --face:Georgia,serif; --headface:Georgia,serif; }
+    .sheet[data-model="11"]::before { content:"";position:absolute;inset:5mm;border:2px dashed #a78b6b; }
+    .sheet[data-model="11"] .sheet-head { padding:5mm; transform:rotate(-1deg); }
+    .sheet[data-model="11"] .category { background:#f8f2e6; padding:4mm; box-shadow:3px 3px 0 #c5b8a1; }
+    .sheet[data-model="12"] { --paper:#171728; --ink:#f8f8ff; --muted:#b9b1d2; --highlight:#ff47b8; --face:Arial,sans-serif; --headface:Arial,sans-serif; }
+    .sheet[data-model="12"]::before { content:"";position:absolute;inset:4mm;border:2px solid #2ef5e0;box-shadow:inset 0 0 20px #2ef5e040; }
+    .sheet[data-model="12"] h1 { text-shadow:3px 3px 0 #28d9d0; text-transform:uppercase; }
+    .sheet[data-model="12"] .category h2 { color:#3dece0; text-transform:uppercase; border-bottom:2px solid var(--highlight); }
+    .sheet[data-model="13"] { --paper:#faf5ef; --ink:#47342c; --muted:#8e7772; --highlight:#ad6c69; --face:Georgia,serif; }
+    .sheet[data-model="13"] .sheet-head { margin:-12mm -12mm 7mm; padding:12mm; background:#efd7d3; text-align:left; border-radius:0 0 50% 0; }
+    .sheet[data-model="13"] .logo { margin-left:0; }
+    .sheet[data-model="13"] .category h2 { border-left:3mm solid var(--highlight); padding-left:3mm; font-style:italic; }
+    .sheet[data-model="14"] { --paper:#ecf8f8; --ink:#194f55; --muted:#698f94; --highlight:#007e91; --face:Arial,sans-serif; --headface:Arial,sans-serif; }
+    .sheet[data-model="14"] .sheet-head { background:#007e91; color:white; border-radius:0 0 24mm 24mm; margin:-12mm -12mm 8mm; padding:12mm; }
+    .sheet[data-model="14"] .eyebrow,.sheet[data-model="14"] .subtitle { color:#c6fbfd; }
+    .sheet[data-model="14"] .category { border:1px solid #b7dfe0; border-radius:12px; padding:4mm; }
+    .sheet[data-model="14"] .price { background:#d3f2f2; border-radius:20px; padding:1mm 2mm; }
+    .sheet[data-model="15"] { --paper:#fdfdfb; --ink:#292b29; --muted:#808782; --highlight:#607367; --face:Georgia,serif; --headface:Arial,sans-serif; }
+    .sheet[data-model="15"] .sheet-head { text-align:left; display:flex; flex-direction:column; align-items:flex-start; min-height:30mm; border-bottom:1px solid #aaa; }
+    .sheet[data-model="15"] .logo { margin:0 0 2mm; }
+    .sheet[data-model="15"] .category h2 { text-transform:uppercase; font:800 12px Arial!important; letter-spacing:.15em; color:var(--ink); }
+    .sheet[data-model="15"] .product { grid-template-columns:1fr auto; padding:4mm 0; border-bottom:1px solid #cfd5d0; }
+    /* ========= 04. DOBRAS, PAINÉIS E IMPRESSÃO ========= */
+    .page.fold-page { display:grid; grid-template-columns:repeat(3, 1fr); }
+    .page.fold-page.bi { grid-template-columns:repeat(2, 1fr); }
+    .fold-panel { height:100%; min-width:0; border-right:1px dashed #0002; overflow:hidden; }
+    .fold-panel .sheet { padding:5mm; }
+    .fold-panel .sheet-head { margin-bottom:4mm; }
+    .fold-panel .sheet h1 { font-size:calc(var(--title-size, 34px) * .7); }
+    .fold-panel .sheet .category h2 { font-size:calc(var(--category-size, 22px) * .69); }
+    .fold-panel .sheet .product-name,.fold-panel .sheet .price { font-size:calc(var(--item-size, 15px) * .75); }
+    .fold-panel .sheet .product-description { font-size:calc(var(--desc-size, 11px) * .83); }
+    .fold-panel .sheet .photo { width:13mm;height:13mm; }
+    .fold-panel .sheet .product { gap:2mm; padding:1.5mm 0; }
+    .fold-panel .sheet .category { margin-bottom:2mm; }
+    .fold-panel .sheet[data-model="4"] .sheet-head,.fold-panel .sheet[data-model="7"] .sheet-head,.fold-panel .sheet[data-model="13"] .sheet-head,.fold-panel .sheet[data-model="14"] .sheet-head { margin:-5mm -5mm 5mm; }
+    .fold-panel .sheet[data-model="9"] .category { display:block; }
+    .fold-panel .sheet.columns .items { column-count:1!important; }
+    .fold-panel .sheet .logo { width:19mm; height:18mm; }
+    .panel-label { position:absolute;bottom:2mm;left:2mm;font:8px Arial;color:#777;opacity:.65; }
+    .fold-panel { position:relative; }
+    .foldmark { display:none; }
+    body.show-guides .foldmark { display:block; position:absolute; top:0;bottom:0;border-left:1px dashed #b61b32;z-index:20;pointer-events:none; }
+    .sheet .footer:empty { display:none; }
+    @media (max-width: 1050px) { .app { grid-template-columns:1fr; } .sidebar { position:static; max-height:none; } }
+    @media (max-width: 650px) { .app { padding:7px;gap:7px; } .top { padding:10px; } .preview-area { padding:12px 5px; } .page { zoom:.6; } }
     @media print {
-      html, body { width: auto !important; margin: 0 !important; padding: 0 !important; background: transparent !important; }
-      .topbar, .editor, .workspace-heading { display: none !important; }
-      .app, .workspace, .panel, .workspace-body, .paper-frame { display: block !important; width: auto !important; max-width: none !important; min-height: 0 !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: transparent !important; }
-      .menu { width: 100% !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
-      .menu::before { inset: 0 !important; }
-      .menu-header { margin-top: 3mm; }
-      [contenteditable="true"] { outline: 0 !important; }
+      html,body { margin:0!important;padding:0!important;background:white!important; }
+      .top,.sidebar,.stage-head,.status,.page-label,.panel-label { display:none!important; }
+      .app,.stage,.preview-area { display:block!important;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:white!important;overflow:visible!important;max-width:none!important; }
+      .page { page-break-after:always; break-after:page; box-shadow:none!important; margin:0!important; zoom:1!important; }
+      .page:last-child { page-break-after:auto; break-after:auto; }
+      .sheet { -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="brand">
-      <div class="brand-mark">✦</div>
-      <div><strong>INJEX STUDIO</strong><small>Gerador profissional de cardápios</small></div>
-    </div>
-    <div class="top-actions">
-      <button class="btn" id="saveProject">↓ Salvar projeto</button>
-      <button class="btn" id="openProject">↑ Abrir projeto</button>
+  <header class="top">
+    <div class="brand">✦ INJEX STUDIO <small>Gerador automático de cardápios • Versão 3.0</small></div>
+    <div class="actions">
+      <button class="btn" id="saveFile">↓ Salvar projeto</button>
+      <button class="btn" id="openFile">↑ Abrir projeto</button>
       <button class="btn primary" id="printTop">▣ Gerar PDF / Imprimir</button>
-      <input type="file" id="projectFile" accept=".json,application/json" hidden>
+      <input id="projectInput" type="file" accept=".json,application/json" hidden>
     </div>
   </header>
-
   <main class="app">
-    <aside class="panel editor">
-      <strong style="font-size:17px">Criador de cardápios</strong>
-      <p class="hint">Preencha os dados, escolha um modelo e edite os textos clicando na prévia.</p>
-      <nav class="tabs" aria-label="Etapas do editor">
-        <button class="tab active" data-tab="content">1. Conteúdo</button>
-        <button class="tab" data-tab="design">2. Modelos</button>
-        <button class="tab" data-tab="settings">3. Impressão</button>
-      </nav>
-
-      <section class="pane active" id="tab-content">
-        <div class="section-title">Estabelecimento</div>
-        <label for="businessName">Nome da empresa</label>
-        <input id="businessName" placeholder="Ex.: Sabor da Casa" maxlength="120">
-        <label for="businessSubtitle">Chamada / subtítulo</label>
-        <input id="businessSubtitle" placeholder="Ex.: Comida feita com amor">
-        <label for="businessFooter">Rodapé (telefone, endereço, Instagram...)</label>
-        <textarea id="businessFooter" placeholder="Pedidos: (19) 99999-9999"></textarea>
-        <label for="logoFile">Logotipo (PNG, JPEG, WEBP)</label>
-        <input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp">
-        <div class="inline-actions"><button class="btn tiny" id="removeLogo">Remover logotipo</button></div>
+    <aside class="panel sidebar">
+      <h2>Crie um cardápio em minutos</h2>
+      <div class="hint">Preencha uma vez, escolha o formato e o modelo. O sistema organiza a arte para imprimir.</div>
+      <div class="tabs">
+        <button class="tab active" data-tab="content">1. Produtos</button>
+        <button class="tab" data-tab="style">2. Modelos</button>
+        <button class="tab" data-tab="print">3. Impressão</button>
+      </div>
+      <section class="pane active" id="contentPane">
+        <div class="heading">Estabelecimento</div>
+        <label for="business">Nome da empresa</label><input id="business" placeholder="Nome do restaurante">
+        <label for="subtitle">Frase / subtítulo</label><input id="subtitle" placeholder="Feito com carinho">
+        <label for="footer">Rodapé / contato</label><textarea id="footer" placeholder="Telefone, endereço, Instagram..."></textarea>
+        <label for="logoUpload">Logotipo</label><input id="logoUpload" type="file" accept="image/*">
+        <button class="btn small" id="removeLogo">Remover logo</button>
+        <label for="qrLink">Link do QR Code (opcional)</label><input id="qrLink" placeholder="https://...">
         <div class="divider"></div>
-        <div class="control-row"><div class="section-title">Categorias e produtos</div><button class="btn tiny dark" id="addCategory">+ Categoria</button></div>
-        <p class="hint">Adicione quantas categorias quiser. Use ↑ e ↓ para definir a ordem.</p>
-        <div id="categoriesEditor"></div>
+        <div class="heading">Cadastro rápido <button class="btn small dark" id="addCategory">+ Categoria</button></div>
+        <div class="hint">Edite itens, fotos e preços. As alterações são salvas no navegador.</div>
+        <div id="categoryEditor"></div>
         <div class="divider"></div>
-        <div class="inline-actions">
-          <button class="btn tiny" id="loadExample">Carregar exemplo</button>
-          <button class="btn tiny red" id="clearProject">Limpar cardápio</button>
-        </div>
+        <div class="heading">Colar lista do WhatsApp</div>
+        <div class="hint">Exemplo: <b>[Bebidas]</b>, depois <b>Coca-Cola | Lata 350ml | 7,00</b>. Uma linha por produto.</div>
+        <textarea id="bulkText" placeholder="[Lanches]&#10;X-Burger | Pão, carne e queijo | 28,00&#10;X-Salada | Pão, carne, salada | 32,00"></textarea>
+        <button class="btn dark" id="bulkImport">Importar produtos</button>
+        <div class="divider"></div>
+        <div class="inline"><button class="btn small" id="example">Exemplo</button><button class="btn small danger" id="clear">Limpar projeto</button></div>
       </section>
-
-      <section class="pane" id="tab-design">
-        <div class="section-title">Escolha um modelo</div>
-        <p class="hint">O conteúdo será mantido quando você mudar o estilo.</p>
+      <section class="pane" id="stylePane">
+        <div class="heading">15 modelos com layouts diferentes</div>
         <div id="modelGrid" class="model-grid"></div>
         <div class="divider"></div>
-        <div class="section-title">Ajustes visuais</div>
-        <label for="accentColor">Cor de destaque (personalizada)</label>
-        <div class="fields-2">
-          <input type="color" id="accentColor" value="#b76b3a">
-          <button class="btn tiny" id="resetAccent">Usar cor do modelo</button>
+        <div class="heading">Ajustes rápidos</div>
+        <div class="inline">
+          <button class="btn small" id="autoSpace">↕ Organizar espaços</button>
+          <button class="btn small" id="autoFont">T Ajustar textos</button>
+          <button class="btn small" id="autoPhotos">▧ Organizar fotos</button>
+          <button class="btn small" id="nextModel">↻ Trocar layout</button>
         </div>
-        <div class="fields-2">
-          <div><label for="titleSize">Tamanho do título</label><input type="number" id="titleSize" min="20" max="70" value="35"></div>
-          <div><label for="itemSize">Tamanho do produto</label><input type="number" id="itemSize" min="11" max="28" value="16"></div>
-        </div>
-        <div class="fields-2">
-          <div><label for="categorySize">Tamanho da categoria</label><input type="number" id="categorySize" min="14" max="42" value="23"></div>
-          <div><label for="descriptionSize">Tamanho dos ingredientes</label><input type="number" id="descriptionSize" min="9" max="22" value="12"></div>
-        </div>
-        <label class="switch-line"><input type="checkbox" id="twoColumns"> Produtos em duas colunas</label>
-        <label class="switch-line"><input type="checkbox" id="compact"> Espaçamento compacto</label>
-        <label class="switch-line"><input type="checkbox" id="dividers"> Linhas entre produtos</label>
+        <label for="accent">Cor de destaque</label><div class="two"><input type="color" id="accent"><button class="btn small" id="resetAccent">Cor original</button></div>
+        <div class="two"><div><label for="titleSize">Título (px)</label><input id="titleSize" type="number" min="20" max="65"></div><div><label for="itemSize">Produto (px)</label><input id="itemSize" type="number" min="10" max="24"></div></div>
+        <div class="two"><div><label for="categorySize">Categoria (px)</label><input id="categorySize" type="number" min="13" max="35"></div><div><label for="descSize">Ingredientes (px)</label><input id="descSize" type="number" min="9" max="19"></div></div>
+        <label class="switch"><input type="checkbox" id="compact"> Espaçamento compacto</label>
+        <label class="switch"><input type="checkbox" id="columns"> Duas colunas (em folhas)</label>
+        <label class="switch"><input type="checkbox" id="dividers"> Separadores entre produtos</label>
+        <label class="switch"><input type="checkbox" id="photos"> Mostrar fotos dos pratos</label>
       </section>
-
-      <section class="pane" id="tab-settings">
-        <div class="section-title">PDF para impressão</div>
-        <p class="hint">O arquivo PDF é gerado pelo recurso de impressão do seu navegador. Na janela que abrir, escolha “Salvar como PDF”.</p>
-        <label for="pageSize">Tamanho da folha</label>
-        <select id="pageSize">
-          <option value="A4">A4 — 210 × 297 mm</option>
-          <option value="A5">A5 — 148 × 210 mm</option>
-          <option value="A3">A3 — 297 × 420 mm</option>
-          <option value="Letter">Carta — 216 × 279 mm</option>
+      <section class="pane" id="printPane">
+        <div class="heading">Formato automático</div>
+        <label for="format">Tipo de cardápio</label>
+        <select id="format">
+          <option value="sheet">Folhas simples (páginas automáticas)</option>
+          <option value="tri-roll">Folder de 3 partes — dobra envolvente</option>
+          <option value="tri-zig">Folder de 3 partes — sanfona</option>
+          <option value="bi">Dobrável ao meio — 4 faces</option>
+          <option value="tent">Cardápio de mesa — 2 faces</option>
         </select>
-        <label class="switch-line"><input id="backgroundNote" type="checkbox" checked> Lembrar de habilitar gráficos de fundo ao imprimir</label>
+        <label for="size">Papel / formato aberto</label>
+        <select id="size"><option value="A4">A4 — 210 × 297 mm</option><option value="A5">A5 — 148 × 210 mm</option><option value="A3">A3 — 297 × 420 mm</option><option value="Letter">Carta — 216 × 279 mm</option></select>
+        <label for="orientation">Orientação</label><select id="orientation"><option value="portrait">Retrato</option><option value="landscape">Paisagem</option></select>
+        <label class="switch"><input type="checkbox" id="guides"> Mostrar linhas de dobra na arte</label>
         <div class="divider"></div>
-        <div class="section-title">Como gerar corretamente</div>
-        <p class="hint">1. Clique em <b>Gerar PDF / Imprimir</b>.<br>2. Destino: <b>Salvar como PDF</b>.<br>3. Margens: <b>Nenhuma</b> ou <b>Padrão</b> conforme a prévia.<br>4. Ative <b>Gráficos de plano de fundo</b> para preservar as cores.<br>5. Confira as páginas antes de salvar.</p>
-        <p class="hint"><b>Para gráfica:</b> confirme com a gráfica sangria, CMYK e tamanho final. O PDF criado pelo navegador costuma sair em RGB e não substitui automaticamente um PDF gráfico profissional.</p>
-        <div class="divider"></div>
+        <div class="heading">Exportação</div>
+        <p class="hint">O navegador gera o PDF: clique em <b>Gerar PDF</b>, escolha <b>Salvar como PDF</b>, escala <b>100%</b>, margens <b>Nenhuma</b> e ative <b>Gráficos de segundo plano</b>.</p>
+        <p class="hint">Folder e dobráveis usam <b>2 páginas</b> (lado externo e interno), prontas para impressão frente e verso. Para a dobra envolvente, confira a aba mais estreita e a orientação da virada na gráfica.</p>
+        <p class="hint"><b>Atenção gráfica:</b> esta exportação é RGB, sem PDF/X e sem conversão CMYK. Para tiragens profissionais que exigem sangria, ajuste de painel e marcas de corte, confira as exigências específicas da gráfica antes de produzir.</p>
         <button class="btn primary" id="printInside" style="width:100%">▣ Gerar PDF / Imprimir</button>
       </section>
     </aside>
-
-    <section class="workspace panel">
-      <div class="workspace-heading">
-        <div><h2>Pré-visualização em tempo real</h2><p>Clique no título, descrições ou preços para editar diretamente na folha.</p></div>
-        <button class="btn primary" id="printPreview">▣ Gerar PDF</button>
-      </div>
-      <div class="workspace-body">
-        <div class="paper-frame" id="paperFrame">
-          <article class="menu" id="menu" data-model="1">
-            <div class="menu-content" id="menuContent"></div>
-          </article>
-        </div>
-      </div>
+    <section class="panel stage">
+      <div class="stage-head"><div><h2>Prévia de impressão</h2><p class="hint">Escolha modelo e formato; a prévia mostra as páginas na ordem de impressão.</p></div><button class="btn primary" id="printPreview">Gerar PDF</button></div>
+      <div class="preview-area" id="pages"></div>
+      <div class="status" id="status">Pronto para montar seu cardápio.</div>
     </section>
   </main>
-
   <script>
-    "use strict";
+    'use strict';
 
-    /* =========================================================
-       DADOS E MODELOS
-       ========================================================= */
-    const STORAGE_KEY = "injex_cardapios_v2";
-    const MODELS = [
-      { id: 1, name: "Clássico", detail: "Bege e cobre", bg: "#fffdfa", ink: "#302820", accent: "#b56b3c" },
-      { id: 2, name: "Luxo", detail: "Preto e dourado", bg: "#101920", ink: "#f6edda", accent: "#d6ac67" },
-      { id: 3, name: "Moderno", detail: "Branco e azul", bg: "#ffffff", ink: "#202d3a", accent: "#3181a3" },
-      { id: 4, name: "Hamburgueria", detail: "Creme e laranja", bg: "#fdf1e3", ink: "#4a2417", accent: "#d45527" },
-      { id: 5, name: "Natural", detail: "Verde orgânico", bg: "#f7f5ee", ink: "#273b32", accent: "#3f7455" },
-      { id: 6, name: "Confeitaria", detail: "Rosa delicado", bg: "#fffafc", ink: "#473446", accent: "#ae6d93" },
-      { id: 7, name: "Street Food", detail: "Grafite e coral", bg: "#1a1717", ink: "#fff3e2", accent: "#ed6348" },
-      { id: 8, name: "Minimalista", detail: "Preto e branco", bg: "#f8f8f6", ink: "#151515", accent: "#151515" }
+    /* ========= 05. ESTADO E PROJETOS ========= */
+    const KEY = 'injex_studio_v3';
+    const PREVIOUS_KEY = 'injex_cardapios_v2';
+    const names = [
+      ['Clássico','Moldura tradicional','#fffcf6','#a65b31'],
+      ['Luxo','Dourado com bordas','#14181c','#d5ad62'],
+      ['Moderno','Faixas coloridas','#ffffff','#2878a7'],
+      ['Burger','Cabeçalho inclinado','#fff0dc','#db532b'],
+      ['Natural','Blocos orgânicos','#f2f3e7','#347c55'],
+      ['Confeitaria','Moldura delicada','#fff9fc','#b36891'],
+      ['Street Food','Grafismos urbanos','#1d1919','#f66b3d'],
+      ['Minimalista','Editorial limpo','#ffffff','#151515'],
+      ['Bistrô','Categorias laterais','#faf8f1','#82653a'],
+      ['Food Truck','Tarjas inclinadas','#20262b','#eeae37'],
+      ['Vintage','Cartões retrô','#eae5d8','#a55b43'],
+      ['Neon','Contraste luminoso','#171728','#ff47b8'],
+      ['Café Boutique','Capa com curva','#faf5ef','#ad6c69'],
+      ['Delivery','Preços em cápsulas','#ecf8f8','#007e91'],
+      ['Editorial','Grade de revista','#fdfdfb','#607367']
     ];
-
-    const sample = () => ({
-      businessName: "SABOR & ARTE",
-      subtitle: "Uma experiência deliciosa",
-      footer: "Faça seu pedido • (19) 99999-9999 • @saborearte",
-      logo: "",
-      model: 1,
-      accentOverride: "",
-      titleSize: 35,
-      itemSize: 16,
-      categorySize: 23,
-      descriptionSize: 12,
-      twoColumns: false,
-      compact: false,
-      dividers: false,
-      pageSize: "A4",
+    const newId = () => Math.random().toString(36).slice(2, 11);
+    const product = (name = '', description = '', price = '') => ({ id: newId(), name, description, price, photo: '', tag: '' });
+    const category = (name = 'Nova categoria') => ({ id: newId(), name, products: [product()] });
+    const example = () => ({
+      business: 'SABOR & ARTE', subtitle: 'Uma experiência deliciosa', footer: 'Pedidos: (19) 99999-9999 • @saborearte', logo: '', qrLink: '',
+      model: 1, accent: '', titleSize: 34, itemSize: 15, categorySize: 22, descSize: 11,
+      compact: false, columns: false, dividers: true, photos: true,
+      format: 'sheet', size: 'A4', orientation: 'portrait', guides: false,
       categories: [
-        { id: uid(), name: "Lanches especiais", products: [
-          { id: uid(), name: "Burger da Casa", description: "Pão brioche, hambúrguer artesanal, queijo, alface e molho especial.", price: "32,90" },
-          { id: uid(), name: "Burger Duplo", description: "Dois hambúrgueres, cheddar, bacon crocante e cebola caramelizada.", price: "39,90" }
-        ] },
-        { id: uid(), name: "Massas", products: [
-          { id: uid(), name: "Macarrão à Bolonhesa", description: "Massa artesanal, molho de tomate, carne moída e parmesão.", price: "35,00" },
-          { id: uid(), name: "Penne ao Molho Branco", description: "Penne, molho branco cremoso, frango e queijo gratinado.", price: "37,00" }
-        ] },
-        { id: uid(), name: "Bebidas", products: [
-          { id: uid(), name: "Refrigerante lata", description: "Consulte os sabores disponíveis.", price: "7,00" },
-          { id: uid(), name: "Suco natural", description: "Feito na hora com frutas selecionadas.", price: "11,00" }
-        ] }
+        { id: newId(), name: 'Lanches especiais', products: [product('Burger da Casa','Pão brioche, hambúrguer artesanal, queijo e molho especial.','32,90'), product('Burger Duplo','Dois hambúrgueres, cheddar, bacon e cebola caramelizada.','39,90')] },
+        { id: newId(), name: 'Massas', products: [product('Macarrão à Bolonhesa','Massa artesanal, molho de tomate, carne e parmesão.','35,00'), product('Penne ao Molho Branco','Frango, molho branco cremoso e parmesão.','37,00')] },
+        { id: newId(), name: 'Bebidas', products: [product('Refrigerante lata','Consulte os sabores.','7,00'), product('Suco natural','Feito na hora.','11,00')] }
       ]
     });
-
-    function uid() {
-      return "i" + Math.random().toString(36).slice(2, 10);
-    }
-
-    function loadInitialState() {
+    function load() {
       try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        if (saved && Array.isArray(saved.categories)) return saved;
-      } catch (error) {
-        console.warn("Não foi possível abrir os dados salvos.", error);
-      }
-      return sample();
+        const saved = JSON.parse(localStorage.getItem(KEY));
+        if (saved?.categories) return { ...example(), ...saved };
+        const old = JSON.parse(localStorage.getItem(PREVIOUS_KEY));
+        if (old?.categories) return { ...example(), ...old, business: old.businessName || old.business || '', descSize: old.descriptionSize || 11, size: old.pageSize || 'A4', categories: old.categories.map(c => ({ ...c, products: c.products.map(p => ({ ...product(), ...p })) })) };
+      } catch (error) { console.warn('Não foi possível carregar o projeto:', error); }
+      return example();
     }
-
-    let state = loadInitialState();
-    const $ = (id) => document.getElementById(id);
-
-    function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (character) => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      })[character]);
-    }
-
-    function saveLocally() {
-      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
-      catch (error) { console.warn("Armazenamento local cheio ou indisponível.", error); }
-    }
-
-    function update() {
-      saveLocally();
-      renderPreview();
-    }
-
-    /* =========================================================
-       CONTROLES E CATEGORIAS
-       ========================================================= */
-    function syncControls() {
-      const fields = {
-        businessName: "businessName", businessSubtitle: "subtitle", businessFooter: "footer",
-        titleSize: "titleSize", itemSize: "itemSize", categorySize: "categorySize",
-        descriptionSize: "descriptionSize", pageSize: "pageSize", twoColumns: "twoColumns",
-        compact: "compact", dividers: "dividers"
-      };
-
-      for (const [inputId, key] of Object.entries(fields)) {
-        const input = $(inputId);
-        if (input.type === "checkbox") input.checked = Boolean(state[key]);
-        else input.value = state[key] ?? "";
-      }
-      $("accentColor").value = state.accentOverride || MODELS.find((m) => m.id === state.model)?.accent || "#b76b3a";
-    }
-
-    function renderEditor() {
-      const container = $("categoriesEditor");
-      container.innerHTML = state.categories.map((category, ci) => `
-        <div class="category-box">
-          <div class="category-head">
-            <input aria-label="Nome da categoria" data-cat="${ci}" data-field="name" value="${escapeHTML(category.name)}">
-            <button class="btn tiny" data-action="cat-up" data-ci="${ci}" title="Subir">↑</button>
-            <button class="btn tiny" data-action="cat-down" data-ci="${ci}" title="Descer">↓</button>
-            <button class="btn tiny red" data-action="cat-delete" data-ci="${ci}" title="Excluir">×</button>
-          </div>
-          ${category.products.map((product, pi) => `
-            <div class="product-box">
-              <label>Produto</label>
-              <input class="product-name" data-ci="${ci}" data-pi="${pi}" data-field="name" value="${escapeHTML(product.name)}" placeholder="Nome do produto">
-              <label>Ingredientes / descrição</label>
-              <textarea data-ci="${ci}" data-pi="${pi}" data-field="description" placeholder="Ingredientes e descrição">${escapeHTML(product.description)}</textarea>
-              <div class="fields-2">
-                <div><label>Preço (R$)</label><input data-ci="${ci}" data-pi="${pi}" data-field="price" value="${escapeHTML(product.price)}" placeholder="29,90"></div>
-                <div>
-                  <label>Organização</label>
-                  <div class="inline-actions" style="margin:0">
-                    <button class="btn tiny" data-action="prod-up" data-ci="${ci}" data-pi="${pi}" title="Subir">↑</button>
-                    <button class="btn tiny" data-action="prod-down" data-ci="${ci}" data-pi="${pi}" title="Descer">↓</button>
-                    <button class="btn tiny red" data-action="prod-delete" data-ci="${ci}" data-pi="${pi}" title="Excluir">×</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          `).join("")}
-          <button class="btn tiny dark" data-action="prod-add" data-ci="${ci}">+ Adicionar produto</button>
-        </div>
-      `).join("");
-    }
-
-    function moveItem(items, index, direction) {
-      const target = index + direction;
-      if (target < 0 || target >= items.length) return;
-      [items[index], items[target]] = [items[target], items[index]];
-    }
-
-    $("categoriesEditor").addEventListener("input", (event) => {
-      const field = event.target.dataset.field;
-      const ci = Number(event.target.dataset.ci);
-      const pi = event.target.dataset.pi;
-      if (!field || !Number.isInteger(ci) || !state.categories[ci]) return;
-      if (pi === undefined) state.categories[ci][field] = event.target.value;
-      else if (state.categories[ci].products[Number(pi)]) state.categories[ci].products[Number(pi)][field] = event.target.value;
-      update();
+    let state = load();
+    const $ = id => document.getElementById(id);
+    const html = x => String(x ?? '').replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
+    const save = () => { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { setStatus('Armazenamento cheio. Exporte seu projeto JSON e use imagens menores.', true); } };
+    const setStatus = (message, warn = false) => { $('status').textContent = message; $('status').classList.toggle('warning', warn); };
+    const normalizePrice = p => { const v = String(p || '').trim(); return v ? (v.startsWith('R$') ? v : `R$ ${v}`) : ''; };
+    const allProducts = () => state.categories.flatMap(c => c.products);
+    const readImage = file => new Promise((resolve, reject) => {
+      if (!file) return resolve('');
+      const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.onerror = reject; reader.readAsDataURL(file);
     });
-
-    $("categoriesEditor").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-action]");
-      if (!button) return;
-      const { action } = button.dataset;
-      const ci = Number(button.dataset.ci);
-      const pi = Number(button.dataset.pi);
-      const category = state.categories[ci];
-      if (!category) return;
-
-      if (action === "cat-up") moveItem(state.categories, ci, -1);
-      if (action === "cat-down") moveItem(state.categories, ci, 1);
-      if (action === "cat-delete" && confirm(`Excluir a categoria “${category.name}” e todos os produtos?`)) state.categories.splice(ci, 1);
-      if (action === "prod-add") category.products.push({ id: uid(), name: "Novo produto", description: "", price: "0,00" });
-      if (action === "prod-up") moveItem(category.products, pi, -1);
-      if (action === "prod-down") moveItem(category.products, pi, 1);
-      if (action === "prod-delete") category.products.splice(pi, 1);
-      renderEditor();
-      update();
-    });
-
-    $("addCategory").addEventListener("click", () => {
-      state.categories.push({ id: uid(), name: "Nova categoria", products: [{ id: uid(), name: "Novo produto", description: "", price: "0,00" }] });
-      renderEditor();
-      update();
-    });
-
-    /* =========================================================
-       MODELOS E RENDERIZAÇÃO DO CARDÁPIO
-       ========================================================= */
-    function renderModels() {
-      $("modelGrid").innerHTML = MODELS.map((model) => `
-        <button class="model-button ${state.model === model.id ? "selected" : ""}" data-model-choice="${model.id}" aria-pressed="${state.model === model.id}">
-          <div class="model-thumb" style="--thumb-bg:${model.bg};--thumb-text:${model.ink};--thumb-accent:${model.accent}"></div>
-          <strong>Modelo ${model.id} — ${model.name}</strong>
-          <span>${model.detail}</span>
-        </button>
-      `).join("");
-    }
-
-    $("modelGrid").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-model-choice]");
-      if (!button) return;
-      state.model = Number(button.dataset.modelChoice);
-      state.accentOverride = "";
-      syncControls();
-      renderModels();
-      update();
-    });
-
-    function formatPrice(raw) {
-      const text = String(raw ?? "").trim();
-      if (!text) return "";
-      const withoutCurrency = text.replace(/^R\$\s*/i, "");
-      return `R$ ${withoutCurrency}`;
-    }
-
-    function renderPreview() {
-      const menu = $("menu");
-      menu.dataset.model = state.model;
-      menu.classList.toggle("two-columns", Boolean(state.twoColumns));
-      menu.classList.toggle("compact", Boolean(state.compact));
-      menu.classList.toggle("show-divider", Boolean(state.dividers));
-      menu.style.setProperty("--title-size", `${Number(state.titleSize) || 35}px`);
-      menu.style.setProperty("--category-size", `${Number(state.categorySize) || 23}px`);
-      menu.style.setProperty("--item-size", `${Number(state.itemSize) || 16}px`);
-      menu.style.setProperty("--desc-size", `${Number(state.descriptionSize) || 12}px`);
-      if (state.accentOverride) menu.style.setProperty("--menu-accent", state.accentOverride);
-      else menu.style.removeProperty("--menu-accent");
-
-      const logo = state.logo ? `<img class="menu-logo" alt="Logotipo do estabelecimento" src="${escapeHTML(state.logo)}">` : "";
-      const categories = state.categories.map((category, ci) => `
-        <section class="menu-category">
-          <h2 contenteditable="true" spellcheck="false" data-edit="category" data-ci="${ci}">${escapeHTML(category.name)}</h2>
-          <div class="menu-items">
-            ${category.products.map((product, pi) => `
-              <div class="menu-product">
-                <div class="menu-product-main">
-                  <div class="menu-product-name" contenteditable="true" spellcheck="false" data-edit="product-name" data-ci="${ci}" data-pi="${pi}">${escapeHTML(product.name)}</div>
-                  ${product.description ? `<div class="menu-product-description" contenteditable="true" spellcheck="false" data-edit="description" data-ci="${ci}" data-pi="${pi}">${escapeHTML(product.description)}</div>` : ""}
-                </div>
-                <div class="menu-product-price" contenteditable="true" spellcheck="false" data-edit="price" data-ci="${ci}" data-pi="${pi}">${escapeHTML(formatPrice(product.price))}</div>
-              </div>
-            `).join("")}
-          </div>
-        </section>
-      `).join("");
-
-      $("menuContent").innerHTML = `
-        <div class="menu-header">
-          ${logo}
-          <h1 class="menu-title" contenteditable="true" spellcheck="false" data-edit="businessName">${escapeHTML(state.businessName)}</h1>
-          ${state.subtitle ? `<p class="menu-subtitle" contenteditable="true" spellcheck="false" data-edit="subtitle">${escapeHTML(state.subtitle)}</p>` : ""}
-          <div class="menu-separator"></div>
-        </div>
-        ${categories}
-        ${state.footer ? `<footer class="menu-footer" contenteditable="true" spellcheck="false" data-edit="footer">${escapeHTML(state.footer)}</footer>` : ""}
-      `;
-      applyPageSize();
-    }
-
-    $("menuContent").addEventListener("focusout", (event) => {
-      const element = event.target.closest("[data-edit]");
-      if (!element) return;
-      const value = element.innerText.trim();
-      const ci = Number(element.dataset.ci);
-      const pi = Number(element.dataset.pi);
-      const type = element.dataset.edit;
-      if (type === "businessName") state.businessName = value;
-      if (type === "subtitle") state.subtitle = value;
-      if (type === "footer") state.footer = value;
-      if (type === "category" && state.categories[ci]) state.categories[ci].name = value;
-      const product = state.categories[ci]?.products[pi];
-      if (product && type === "product-name") product.name = value;
-      if (product && type === "description") product.description = value;
-      if (product && type === "price") product.price = value.replace(/^R\$\s*/i, "");
-      syncControls();
-      renderEditor();
-      update();
-    });
-
-    function applyPageSize() {
-      const page = state.pageSize || "A4";
-      $("pageRules").textContent = `@page { size: ${page}; margin: 12mm; }`;
-      const widths = { A3: "1122px", A4: "794px", A5: "560px", Letter: "816px" };
-      const heights = { A3: "1587px", A4: "1123px", A5: "794px", Letter: "1056px" };
-      $("paperFrame").style.maxWidth = widths[page] || widths.A4;
-      $("menu").style.minHeight = heights[page] || heights.A4;
-    }
-
-    /* =========================================================
-       FORMULÁRIOS, IMAGENS E PROJETOS
-       ========================================================= */
-    const basicFields = {
-      businessName: "businessName", businessSubtitle: "subtitle", businessFooter: "footer",
-      titleSize: "titleSize", itemSize: "itemSize", categorySize: "categorySize",
-      descriptionSize: "descriptionSize", pageSize: "pageSize", twoColumns: "twoColumns",
-      compact: "compact", dividers: "dividers"
+    const download = (name, text, type = 'application/json') => {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 1000);
     };
 
-    for (const [id, key] of Object.entries(basicFields)) {
-      $(id).addEventListener("input", (event) => {
-        const input = event.target;
-        state[key] = input.type === "checkbox" ? input.checked : input.type === "number" ? Number(input.value) : input.value;
-        update();
-      });
+    /* ========= 06. CADASTRO, CATEGORIAS E IMPORTAÇÃO ========= */
+    function renderEditor() {
+      $('categoryEditor').innerHTML = state.categories.map((c, ci) => `
+        <div class="category-edit" data-cat="${c.id}">
+          <div class="editbar">
+            <button class="btn small" data-action="move-category" data-ci="${ci}" data-step="-1">↑</button>
+            <button class="btn small" data-action="move-category" data-ci="${ci}" data-step="1">↓</button>
+            <button class="btn small danger" data-action="delete-category" data-ci="${ci}">Excluir</button>
+          </div>
+          <label>Categoria</label><input data-field="category-name" data-ci="${ci}" value="${html(c.name)}">
+          ${c.products.map((p, pi) => `
+            <div class="product-edit">
+              <div class="editbar">
+                <button class="btn small" data-action="move-product" data-ci="${ci}" data-pi="${pi}" data-step="-1">↑</button>
+                <button class="btn small" data-action="move-product" data-ci="${ci}" data-pi="${pi}" data-step="1">↓</button>
+                <button class="btn small danger" data-action="delete-product" data-ci="${ci}" data-pi="${pi}">×</button>
+              </div>
+              <label>Produto</label><input data-field="name" data-ci="${ci}" data-pi="${pi}" value="${html(p.name)}">
+              <label>Ingredientes / descrição</label><textarea data-field="description" data-ci="${ci}" data-pi="${pi}">${html(p.description)}</textarea>
+              <div class="two">
+                <div><label>Preço</label><input data-field="price" data-ci="${ci}" data-pi="${pi}" value="${html(p.price)}"></div>
+                <div><label>Destaque</label><select data-field="tag" data-ci="${ci}" data-pi="${pi}">
+                  ${['','Mais vendido','Novidade','Promoção','Vegetariano','Apimentado'].map(v => `<option ${v === p.tag ? 'selected' : ''}>${v}</option>`).join('')}
+                </select></div>
+              </div>
+              <label>Foto do produto</label><input type="file" accept="image/*" data-photo="1" data-ci="${ci}" data-pi="${pi}">
+              ${p.photo ? '<small>✓ Foto adicionada</small> ' : ''}
+              ${p.photo ? `<button class="btn small" data-action="remove-photo" data-ci="${ci}" data-pi="${pi}">Remover foto</button>` : ''}
+            </div>`).join('')}
+          <button class="btn small dark" data-action="add-product" data-ci="${ci}">+ Produto</button>
+        </div>`).join('');
+    }
+    function move(array, pos, step) {
+      const dest = pos + step;
+      if (dest < 0 || dest >= array.length) return;
+      [array[pos], array[dest]] = [array[dest], array[pos]];
+    }
+    $('categoryEditor').addEventListener('input', event => {
+      const e = event.target, ci = +e.dataset.ci, pi = +e.dataset.pi;
+      if (!e.dataset.field) return;
+      if (e.dataset.field === 'category-name') state.categories[ci].name = e.value;
+      else state.categories[ci].products[pi][e.dataset.field] = e.value;
+      redraw();
+    });
+    $('categoryEditor').addEventListener('change', async event => {
+      const e = event.target;
+      if (e.dataset.photo) {
+        state.categories[+e.dataset.ci].products[+e.dataset.pi].photo = await readImage(e.files[0]);
+        renderEditor(); redraw();
+      }
+    });
+    $('categoryEditor').addEventListener('click', event => {
+      const b = event.target.closest('[data-action]'); if (!b) return;
+      const ci = +b.dataset.ci, pi = +b.dataset.pi, action = b.dataset.action;
+      if (action === 'add-product') state.categories[ci].products.push(product());
+      if (action === 'delete-product') state.categories[ci].products.splice(pi, 1);
+      if (action === 'delete-category') state.categories.splice(ci, 1);
+      if (action === 'move-category') move(state.categories, ci, +b.dataset.step);
+      if (action === 'move-product') move(state.categories[ci].products, pi, +b.dataset.step);
+      if (action === 'remove-photo') state.categories[ci].products[pi].photo = '';
+      renderEditor(); redraw();
+    });
+    $('addCategory').onclick = () => { state.categories.push(category()); renderEditor(); redraw(); };
+    $('bulkImport').onclick = () => {
+      const lines = $('bulkText').value.split(/\r?\n/).map(v => v.trim()).filter(Boolean);
+      if (!lines.length) return setStatus('Cole primeiro uma lista de produtos.', true);
+      let current = null, count = 0;
+      for (const line of lines) {
+        const categoryMatch = line.match(/^\[(.+)\]$/);
+        if (categoryMatch) { current = { id: newId(), name: categoryMatch[1], products: [] }; state.categories.push(current); continue; }
+        if (!current) { current = { id: newId(), name: 'Produtos importados', products: [] }; state.categories.push(current); }
+        const fields = line.split('|').map(s => s.trim());
+        if (fields[0]) { current.products.push(product(fields[0], fields[1] || '', fields[2] || '')); count++; }
+      }
+      $('bulkText').value = ''; renderEditor(); redraw(); setStatus(`${count} produto(s) importado(s). Confira os dados e preços.`);
+    };
+
+    /* ========= 07. MODELOS E CONTROLES ========= */
+    function renderModels() {
+      $('modelGrid').innerHTML = names.map(([name, detail, bg, accent], i) => `
+        <button class="model-choice ${state.model === i + 1 ? 'selected' : ''}" data-model="${i + 1}" aria-label="Modelo ${i + 1}: ${name}">
+          <div class="model-art" style="background:${bg};color:${accent};${[4,7,10,12].includes(i + 1) ? 'border-left:8px solid ' + accent : ''}">
+            <b>${html(name)}</b><span></span><span style="width:88%"></span>
+          </div>
+          <strong>${i + 1}. ${html(name)}</strong><small>${html(detail)}</small>
+        </button>`).join('');
+    }
+    $('modelGrid').onclick = e => {
+      const b = e.target.closest('[data-model]'); if (!b) return;
+      state.model = +b.dataset.model; state.accent = ''; sync(); redraw();
+    };
+    document.querySelectorAll('.tab').forEach(button => button.onclick = () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t === button));
+      document.querySelectorAll('.pane').forEach(p => p.classList.toggle('active', p.id === button.dataset.tab + 'Pane'));
+    });
+    const simpleFields = ['business','subtitle','footer','qrLink','accent','titleSize','itemSize','categorySize','descSize','format','size','orientation'];
+    const boolFields = ['compact','columns','dividers','photos','guides'];
+    for (const field of simpleFields) $(field).addEventListener('input', () => {
+      state[field] = ['titleSize','itemSize','categorySize','descSize'].includes(field) ? Number($(field).value) : $(field).value;
+      if (field === 'format' && state.format !== 'sheet') state.orientation = 'landscape';
+      syncPrintFields(); redraw();
+    });
+    for (const field of boolFields) $(field).addEventListener('change', () => { state[field] = $(field).checked; redraw(); });
+    $('logoUpload').onchange = async event => { state.logo = await readImage(event.target.files[0]); redraw(); };
+    $('removeLogo').onclick = () => { state.logo = ''; $('logoUpload').value = ''; redraw(); };
+    $('resetAccent').onclick = () => { state.accent = ''; redraw(); };
+    $('autoSpace').onclick = () => { state.compact = !state.compact; sync(); redraw(); setStatus(state.compact ? 'Espaçamento compacto ativado.' : 'Espaçamento ampliado.'); };
+    $('autoFont').onclick = () => { state.itemSize = 13; state.descSize = 10; state.categorySize = 19; state.titleSize = 30; sync(); redraw(); setStatus('Tipografia ajustada para caber mais conteúdo.'); };
+    $('autoPhotos').onclick = () => { state.photos = !state.photos; sync(); redraw(); };
+    $('nextModel').onclick = () => { state.model = state.model % 15 + 1; state.accent = ''; sync(); redraw(); };
+    $('example').onclick = () => { if (confirm('Substituir o projeto atual pelo exemplo?')) { state = example(); sync(); renderEditor(); redraw(); } };
+    $('clear').onclick = () => { if (confirm('Limpar os produtos e dados atuais?')) { state = { ...example(), business:'', subtitle:'', footer:'', categories:[] }; sync(); renderEditor(); redraw(); } };
+    function syncPrintFields() { $('orientation').value = state.orientation; }
+    function sync() {
+      simpleFields.forEach(k => { $(k).value = state[k] || (k === 'accent' ? names[state.model-1][3] : ''); });
+      boolFields.forEach(k => { $(k).checked = !!state[k]; });
+      syncPrintFields(); renderModels();
     }
 
-    $("accentColor").addEventListener("input", (event) => {
-      state.accentOverride = event.target.value;
-      update();
-    });
-
-    $("resetAccent").addEventListener("click", () => {
-      state.accentOverride = "";
-      syncControls();
-      update();
-    });
-
-    $("logoFile").addEventListener("change", (event) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      if (!file.type.startsWith("image/")) return alert("Escolha uma imagem PNG, JPEG ou WEBP.");
-      if (file.size > 4 * 1024 * 1024) return alert("Use um logotipo de até 4 MB.");
-      const reader = new FileReader();
-      reader.onload = () => { state.logo = String(reader.result); update(); };
-      reader.readAsDataURL(file);
-    });
-
-    $("removeLogo").addEventListener("click", () => {
-      state.logo = "";
-      $("logoFile").value = "";
-      update();
-    });
-
-    $("saveProject").addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const anchor = document.createElement("a");
-      anchor.href = url;
-      anchor.download = `${(state.businessName || "cardapio").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}-projeto.json`;
-      anchor.click();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
-    });
-
-    $("openProject").addEventListener("click", () => $("projectFile").click());
-    $("projectFile").addEventListener("change", async (event) => {
-      const file = event.target.files?.[0];
-      if (!file) return;
-      try {
-        const imported = JSON.parse(await file.text());
-        if (!Array.isArray(imported.categories)) throw new Error("Projeto inválido.");
-        state = { ...sample(), ...imported };
-        syncControls(); renderEditor(); renderModels(); update();
-        alert("Projeto aberto com sucesso!");
-      } catch (error) {
-        alert("Não foi possível abrir esse projeto JSON.");
+    /* ========= 08. MONTAGEM DAS FOLHAS ========= */
+    const paper = { A4: [210,297], A5:[148,210], A3:[297,420], Letter:[216,279] };
+    const units = () => { const base = paper[state.size] || paper.A4; return state.orientation === 'landscape' ? [base[1],base[0]] : base; };
+    const photoHTML = p => state.photos && p.photo ? `<img class="photo" src="${p.photo}" alt="">` : '';
+    const productHTML = p => `<div class="product">
+      <div class="product-info">${photoHTML(p)}<div class="product-name">${html(p.name || 'Novo produto')}${p.tag ? `<span class="tag">${html(p.tag)}</span>` : ''}</div>
+      ${p.description ? `<div class="product-description">${html(p.description)}</div>` : ''}</div>
+      <div class="price">${html(normalizePrice(p.price))}</div>
+    </div>`;
+    const categoryHTML = c => `<section class="category"><h2>${html(c.name)}</h2><div class="items">${c.products.map(productHTML).join('')}</div></section>`;
+    const headerHTML = title => `<header class="sheet-head">${state.logo ? `<img class="logo" src="${state.logo}" alt="Logo">` : ''}<div class="eyebrow">Cardápio</div><h1>${html(title || state.business || 'SEU RESTAURANTE')}</h1>${state.subtitle ? `<div class="subtitle">${html(state.subtitle)}</div>` : ''}</header>`;
+    const qrHTML = () => {
+      if (!state.qrLink) return '';
+      // Imagem obtida por serviço externo. Necessita de internet para aparecer no PDF.
+      const url = 'https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + encodeURIComponent(state.qrLink);
+      return `<img class="qr" src="${url}" alt="QR Code do estabelecimento">`;
+    };
+    const footerHTML = () => `<div class="footer">${html(state.footer)}${qrHTML()}</div>`;
+    function sheetHTML(content, config = {}) {
+      const accent = state.accent || names[state.model-1][3];
+      const opts = [state.compact ? 'compact' : '', state.columns && !config.panel ? 'columns' : '', state.dividers ? 'dividers' : '', state.photos ? '' : 'no-photo'].join(' ');
+      return `<div class="sheet ${opts}" data-model="${state.model}" style="--highlight:${accent};--title-size:${state.titleSize}px;--item-size:${state.itemSize}px;--category-size:${state.categorySize}px;--desc-size:${state.descSize}px;${config.panel ? '--inner:5mm' : ''}">${content}</div>`;
+    }
+    const createPage = (w, h, label, kind = '') => {
+      const page = document.createElement('div'); page.className = `page ${kind}`;
+      page.style.setProperty('--paper-w', `${w}mm`); page.style.setProperty('--paper-h', `${h}mm`);
+      page.innerHTML = `<span class="page-label">${html(label)}</span>`;
+      return page;
+    };
+    const contentBlock = c => ({ ...c, products: c.products.filter(p => p.name || p.description || p.price) });
+    function printSheetPages(root, w, h) {
+      // Paginação pela altura real dos blocos. Cada página mantém seu cabeçalho.
+      let pages = 0, overflows = 0;
+      const add = () => {
+        const page = createPage(w,h,`Página ${++pages}`);
+        const body = document.createElement('div'); body.className = 'section-content';
+        const sheet = document.createElement('div');
+        sheet.innerHTML = sheetHTML(`${headerHTML()}<div class="section-content"></div>`);
+        const wrapper = sheet.firstElementChild;
+        wrapper.querySelector('.section-content').replaceWith(body);
+        page.prepend(wrapper); root.appendChild(page);
+        return { page, wrapper, body };
+      };
+      let current = add();
+      const limit = () => current.wrapper.clientHeight - current.wrapper.getBoundingClientRect().height * .04;
+      const fits = () => current.wrapper.scrollHeight <= current.wrapper.clientHeight + 2;
+      const insertCategory = (c, products) => {
+        const temp = document.createElement('div'); temp.innerHTML = categoryHTML({ ...c, products });
+        current.body.appendChild(temp.firstElementChild);
+      };
+      for (const c of state.categories.map(contentBlock)) {
+        if (!c.products.length) continue;
+        let pending = [];
+        let activeCategory = null;
+        for (const p of c.products) {
+          pending.push(p);
+          if (activeCategory?.parentElement) activeCategory.remove();
+          insertCategory(c,pending);
+          activeCategory = current.body.lastElementChild;
+          if (!fits() && pending.length > 1) {
+            pending.pop(); activeCategory.remove(); insertCategory(c,pending);
+            current = add(); pending = [p]; insertCategory(c,pending); activeCategory = current.body.lastElementChild;
+          }
+          if (!fits() && pending.length === 1) { overflows++; current = add(); pending = []; activeCategory = null; }
+        }
       }
-      event.target.value = "";
-    });
+      if (state.footer || state.qrLink) {
+        const f = document.createElement('div'); f.innerHTML = footerHTML(); current.body.appendChild(f.firstElementChild);
+        if (!fits()) { current.body.lastElementChild.remove(); current = add(); current.body.insertAdjacentHTML('beforeend',footerHTML()); }
+      }
+      // Se uma categoria não coube e abriu página vazia, remover a página sem conteúdo.
+      root.querySelectorAll('.page').forEach(p => { if (!p.querySelector('.category,.footer')) p.remove(); });
+      return { count: root.querySelectorAll('.page').length, overflows };
+    }
 
-    $("loadExample").addEventListener("click", () => {
-      if (!confirm("Substituir o cardápio atual pelo exemplo?")) return;
-      state = sample();
-      syncControls(); renderEditor(); renderModels(); update();
-    });
-
-    $("clearProject").addEventListener("click", () => {
-      if (!confirm("Limpar todo o cardápio atual? Salve uma cópia do projeto antes, se precisar.")) return;
-      state = { ...sample(), businessName: "NOME DO ESTABELECIMENTO", subtitle: "", footer: "", logo: "", categories: [] };
-      syncControls(); renderEditor(); renderModels(); update();
-    });
-
-    document.querySelectorAll(".tab").forEach((button) => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab === button));
-        document.querySelectorAll(".pane").forEach((pane) => pane.classList.toggle("active", pane.id === `tab-${button.dataset.tab}`));
+    /* ========= 09. DOBRÁVEIS: IMPOSIÇÃO EXTERNA / INTERNA ========= */
+    function distribute(items, slots) {
+      // Estimativa por quantidade de conteúdo; mantém cada categoria e produto intactos.
+      const buckets = Array.from({ length: slots }, () => []);
+      const weights = Array(slots).fill(0);
+      const weighted = items.map(c => ({ ...c, weight: 3 + c.products.reduce((t,p) => t + 2 + (p.description || '').length / 45 + (p.photo && state.photos ? 3 : 0), 0) }));
+      weighted.forEach(item => { const i = weights.indexOf(Math.min(...weights)); buckets[i].push(item); weights[i] += item.weight; });
+      return buckets;
+    }
+    function foldPages(root, w, h) {
+      const three = state.format.startsWith('tri');
+      const two = !three;
+      const slots = three ? 3 : 2;
+      const external = createPage(w,h,'Lado externo • frente',`fold-page ${two ? 'bi' : ''}`);
+      const internal = createPage(w,h,'Lado interno • verso',`fold-page ${two ? 'bi' : ''}`);
+      const usable = state.categories.map(contentBlock).filter(c => c.products.length);
+      const chunks = distribute(usable, three ? 4 : state.format === 'tent' ? 2 : 2);
+      const categoryContent = list => list.map(categoryHTML).join('');
+      const cover = sheetHTML(headerHTML() + footerHTML(), {panel:true});
+      const back = sheetHTML(`<div class="eyebrow">Obrigado pela preferência</div>${footerHTML()}`, {panel:true});
+      const section = idx => sheetHTML(`<div class="section-content">${categoryContent(chunks[idx] || [])}</div>`, {panel:true});
+      let outside, inside;
+      if (three && state.format === 'tri-roll') {
+        // Dobra envolvente padrão: a aba entra primeiro; ordem impressa externa = aba / verso / capa.
+        outside = [[section(0),'Aba interna'],[back,'Contracapa'],[cover,'Capa']];
+        inside = [[section(1),'Interno esquerdo'],[section(2),'Interno central'],[section(3),'Interno direito']];
+        // A aba costuma ser 2–3 mm mais estreita; frações ajustadas para A4.
+        external.style.gridTemplateColumns = '32.5% 33.75% 33.75%';
+        internal.style.gridTemplateColumns = '33.75% 33.75% 32.5%';
+      } else if (three) {
+        // Sanfona: seis painéis iguais; exterior = verso / capa / painel externo.
+        outside = [[section(0),'Externo esquerdo'],[back,'Contracapa'],[cover,'Capa']];
+        inside = [[section(1),'Interno esquerdo'],[section(2),'Interno central'],[section(3),'Interno direito']];
+      } else if (state.format === 'bi') {
+        outside = [[back,'Contracapa'],[cover,'Capa']];
+        inside = [[section(0),'Interior esquerdo'],[section(1),'Interior direito']];
+      } else {
+        outside = [[cover,'Face frontal'],[section(0),'Face lateral']];
+        inside = [[section(1),'Face posterior'],[back,'Aba/base']];
+      }
+      const makePanels = (page, sections) => {
+        sections.forEach(([content,label]) => {
+          const p = document.createElement('div'); p.className = 'fold-panel';
+          p.innerHTML = `${content}<div class="panel-label">${label}</div>`;
+          page.appendChild(p);
+        });
+      };
+      makePanels(external,outside); makePanels(internal,inside);
+      [external,internal].forEach(page => {
+        for (let i = 1; i < slots; i++) {
+          const mark = document.createElement('div'); mark.className = 'foldmark';
+          mark.style.left = `${i * 100 / slots}%`; page.appendChild(mark);
+        }
       });
-    });
+      root.append(external,internal);
+      let overflows = 0;
+      root.querySelectorAll('.fold-panel').forEach(p => { if (p.firstElementChild.scrollHeight > p.clientHeight + 2) overflows++; });
+      return {count:2,overflows};
+    }
+    function redraw() {
+      save(); renderModels();
+      const [w,h] = units();
+      $('printPage').textContent = `@page { size: ${w}mm ${h}mm; margin: 0; }`;
+      document.body.classList.toggle('show-guides',state.guides);
+      const root = $('pages'); root.innerHTML = '';
+      if (!state.categories.length || !allProducts().some(p => p.name || p.description || p.price)) {
+        const page = createPage(w,h,'Exemplo vazio'); page.innerHTML += sheetHTML(headerHTML() + '<p style="text-align:center">Adicione uma categoria e seus produtos.</p>'); root.appendChild(page);
+        setStatus('Comece preenchendo os produtos na lateral.'); return;
+      }
+      const result = state.format === 'sheet' ? printSheetPages(root,w,h) : foldPages(root,w,h);
+      if (result.overflows) setStatus(`Atenção: ${result.overflows} bloco(s) podem não caber no papel. Use “Ajustar textos”, diminua o conteúdo ou escolha outro formato. Confira a prévia de impressão.`,true);
+      else setStatus(`${result.count} página(s) montada(s) • ${names[state.model-1][0]} • ${state.size} ${state.orientation === 'landscape' ? 'paisagem' : 'retrato'}. Confira o PDF antes de imprimir.`);
+    }
 
+    /* ========= 10. EXPORTAÇÃO, SALVAMENTO E INICIALIZAÇÃO ========= */
+    $('saveFile').onclick = () => download(`cardapio-${(state.business || 'cliente').toLowerCase().replace(/[^a-z0-9]+/g,'-')}.json`, JSON.stringify(state,null,2));
+    $('openFile').onclick = () => $('projectInput').click();
+    $('projectInput').onchange = async e => {
+      const file = e.target.files[0]; if (!file) return;
+      try { const parsed = JSON.parse(await file.text()); if (!Array.isArray(parsed.categories)) throw Error('Projeto inválido'); state = { ...example(), ...parsed }; sync(); renderEditor(); redraw(); }
+      catch (error) { alert(`Não foi possível abrir o projeto: ${error.message}`); }
+      e.target.value = '';
+    };
     function printMenu() {
-      document.activeElement?.blur();
-      applyPageSize();
+      redraw();
+      const overflow = [...document.querySelectorAll('.fold-panel')].some(p => p.firstElementChild.scrollHeight > p.clientHeight + 2);
+      if (overflow && !confirm('Alguns painéis parecem ter conteúdo demais. Deseja conferir mesmo assim na impressão?')) return;
       window.print();
     }
-
-    ["printTop", "printInside", "printPreview"].forEach((id) => $(id).addEventListener("click", printMenu));
-
-    // Inicialização do aplicativo.
-    syncControls();
-    renderEditor();
-    renderModels();
-    renderPreview();
+    ['printTop','printInside','printPreview'].forEach(id => $(id).onclick = printMenu);
+    sync(); renderEditor(); redraw();
   </script>
 </body>
 </html>
