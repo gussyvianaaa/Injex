@@ -1,19 +1,646 @@
-<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Injex | Gerador de Cardápios</title><style id="printPageSize">@page{size:A4;margin:0}</style><style>
-:root{--primary:#d97706;--ink:#1d2533;--bg:#f3f5f8}*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,Segoe UI,Arial,sans-serif;color:var(--ink)}button,input,textarea,select{font:inherit}button{cursor:pointer}header{background:#121b2b;color:white;padding:16px 25px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}header strong{font-size:20px}header small{color:#bac5d7}main{display:grid;grid-template-columns:minmax(330px,440px) minmax(0,1fr);gap:18px;padding:18px;max-width:1700px;margin:auto}.panel{background:white;border:1px solid #e1e6ee;border-radius:14px;padding:18px;box-shadow:0 3px 14px #10223b08}.formpanel{max-height:calc(100vh - 120px);overflow:auto;position:sticky;top:14px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.btn{border:1px solid #cfd6e0;padding:10px 12px;border-radius:9px;background:white;color:#293243;font-weight:650}.btn.primary{background:#1f2937;color:#fff;border-color:#1f2937}.btn.danger{color:#b91c1c}.btn:hover{filter:brightness(.96)}.tabs{display:flex;gap:6px;margin:16px 0}.tab{flex:1}.tab.active{background:#1f2937;color:white}.section{display:none}.section.active{display:block}label{display:block;font-size:13px;font-weight:700;margin:12px 0 5px}input:not([type=color]),textarea,select{width:100%;border:1px solid #cfd6df;border-radius:8px;padding:10px;background:white;color:#202a39}textarea{min-height:65px;resize:vertical}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}.three{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.hint{font-size:12px;color:#657184;line-height:1.5}.item{border:1px solid #dce2e9;background:#fafbfc;border-radius:10px;padding:11px;margin:10px 0}.itemhead{display:flex;justify-content:space-between;gap:10px;align-items:center}.itemhead strong{overflow-wrap:anywhere}.smallbtn{font-size:12px;padding:6px 8px}.previewtop{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:12px}.paperwrap{background:#dce2ea;padding:25px;display:flex;justify-content:center;align-items:flex-start;min-height:650px;overflow:auto}.paper{width:210mm;min-height:297mm;background:white;box-shadow:0 10px 25px #16202c22;position:relative;padding:17mm 16mm;color:var(--text);font-family:var(--font);font-size:var(--body-size);overflow-wrap:anywhere}.paper.a5{width:148mm;min-height:210mm;padding:12mm}.paper.square{width:180mm;min-height:180mm;padding:12mm}.paper .menuhead{text-align:center;border-bottom:2px solid var(--accent);padding-bottom:20px;margin-bottom:22px}.paper .logo{max-width:140px;max-height:100px;object-fit:contain;margin:0 auto 12px;display:block}.paper .business{font-family:var(--title-font);font-size:var(--title-size);font-weight:850;line-height:1.05;letter-spacing:-.02em}.paper .subtitle{color:var(--muted);font-size:13px;margin-top:9px;white-space:pre-line}.paper .category{font-family:var(--title-font);font-weight:800;font-size:23px;color:var(--accent);border-bottom:1px solid var(--accent);padding-bottom:6px;margin:20px 0 12px;break-after:avoid}.paper .product{margin:0 0 17px;break-inside:avoid}.paper .phead{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.paper .pname{font-size:1.08em;font-weight:750}.paper .price{color:var(--accent);font-weight:850;white-space:nowrap}.paper .desc{color:var(--muted);font-size:.92em;margin-top:5px;line-height:1.5;white-space:pre-line}.paper .footer{text-align:center;color:var(--muted);font-size:12px;margin-top:30px;padding-top:16px;border-top:1px solid #dedede;white-space:pre-line}.paper.elegante{--text:#25221e;--muted:#746d63;--title-font:Georgia,serif;--font:Georgia,serif}.paper.moderno{--text:#182231;--muted:#687486;--title-font:Segoe UI,Arial,sans-serif;--font:Segoe UI,Arial,sans-serif}.paper.escuro{--text:#f9f4eb;--muted:#d3c6b7;--title-font:Segoe UI,Arial,sans-serif;--font:Segoe UI,Arial,sans-serif;background:#1b2028}.paper.escuro .footer{border-color:#49505b}.paper.escuro .menuhead{border-color:var(--accent)}.paper .contenteditable:focus{outline:2px dashed var(--accent);outline-offset:3px;border-radius:3px}.paper .contenteditable{cursor:text}.empty{color:#64748b;text-align:center;padding:45px 12px}.notice{font-size:12px;color:#44546b;background:#eff6ff;padding:12px;border-radius:8px;margin:12px 0}.hidden{display:none}.status{color:#bac5d7;font-size:12px}@media(max-width:970px){main{grid-template-columns:1fr}.formpanel{position:static;max-height:none}.paperwrap{padding:10px}.paper{transform-origin:top center;}}@media print{@page{margin:0}header,.formpanel,.previewtop,.notice,.no-print{display:none!important}main{display:block;padding:0;margin:0}.panel{padding:0;border:0;box-shadow:none}.paperwrap{padding:0;background:white;display:block;min-height:0;overflow:visible}.paper{box-shadow:none;width:210mm;min-height:297mm;print-color-adjust:exact;-webkit-print-color-adjust:exact;margin:0 auto}.paper.a5{width:148mm;min-height:210mm}.paper.square{width:180mm;min-height:180mm}} </style></head><body>
-<header><div><strong>🍽️ Gerador de Cardápios <span style="color:#ffcd73">Injex</span></strong><div><small>Cadastre • Monte automaticamente • Personalize • Imprima</small></div></div><div class="toolbar"><button class="btn" onclick="exportData()">⬇ Salvar projeto</button><button class="btn" onclick="document.getElementById('importFile').click()">⬆ Abrir projeto</button><button class="btn primary" onclick="printMenu()">🖨 Imprimir / PDF</button><input type="file" id="importFile" accept=".json,application/json" hidden onchange="importData(event)"></div><span class="status" id="status">Salvo automaticamente neste navegador</span></header>
-<main><aside class="panel formpanel"><div class="tabs"><button class="btn tab active" data-tab="cadastro" onclick="setTab('cadastro')">1. Conteúdo</button><button class="btn tab" data-tab="design" onclick="setTab('design')">2. Aparência</button><button class="btn tab" data-tab="ajustes" onclick="setTab('ajustes')">3. Ajustes</button></div>
-<div class="section active" id="cadastro"><h3>Dados do estabelecimento</h3><label>Nome da empresa</label><input id="business" placeholder="Ex.: Sabor da Casa" oninput="setField('business',this.value)"><label>Chamada / subtítulo</label><input id="subtitle" placeholder="Comida boa, feita com carinho" oninput="setField('subtitle',this.value)"><label>Rodapé (contato, endereço ou redes sociais)</label><textarea id="footer" placeholder="WhatsApp • Instagram • Endereço" oninput="setField('footer',this.value)"></textarea><label>Logotipo (opcional)</label><input id="logoInput" type="file" accept="image/*" onchange="uploadLogo(event)"><div class="toolbar" style="margin-top:8px"><button class="btn smallbtn" onclick="removeLogo()">Remover logo</button></div><hr style="border:0;border-top:1px solid #e3e6ed;margin:23px 0"><h3>Produtos e categorias</h3><div class="notice">Crie categorias como Lanches, Massas e Bebidas. Cada produto aparece imediatamente na prévia.</div><div id="categories"></div><button class="btn primary" style="width:100%" onclick="addCategory()">+ Nova categoria</button></div>
-<div class="section" id="design"><h3>Modelos automáticos</h3><label>Estilo</label><select id="template" onchange="setField('template',this.value)"><option value="moderno">Moderno e limpo</option><option value="elegante">Elegante / restaurante</option><option value="escuro">Escuro / hamburgueria</option></select><label>Formato</label><select id="format" onchange="setField('format',this.value)"><option value="a4">A4 (21 × 29,7 cm)</option><option value="a5">A5 (14,8 × 21 cm)</option><option value="square">Quadrado (18 × 18 cm)</option></select><label>Cor principal</label><input type="color" id="accent" onchange="setField('accent',this.value)" style="height:44px;width:100%;cursor:pointer"><label>Tamanho dos títulos</label><input type="range" id="titleSize" min="25" max="55" step="1" oninput="setField('titleSize',Number(this.value))"><label>Tamanho dos textos</label><input type="range" id="bodySize" min="11" max="20" step="1" oninput="setField('bodySize',Number(this.value))"><hr><button class="btn" onclick="resetDesign()">Restaurar aparência padrão</button></div>
-<div class="section" id="ajustes"><h3>Editor de ajustes</h3><p class="hint">Clique diretamente no nome, texto, preço ou descrição na prévia à direita e digite a alteração. Ela fica salva no cadastro automaticamente.</p><p class="hint">Para mudar a ordem, use os botões ↑ e ↓ de categorias e produtos na aba Conteúdo. Na aba Aparência você troca cores, modelo e fontes com um clique.</p><div class="notice">Dica de impressão: selecione “Salvar como PDF”, escolha o mesmo tamanho de papel do projeto e ative “Gráficos de segundo plano” para preservar as cores.</div><button class="btn" onclick="window.scrollTo({top:0,behavior:'smooth'});setTab('cadastro')">Editar produtos</button><hr><h3>Projeto</h3><button class="btn" onclick="loadSample()">Carregar exemplo de demonstração</button><p class="hint">O exemplo substitui o projeto atual.</p><button class="btn danger" onclick="newProject()">Criar novo cardápio (limpar tudo)</button></div></aside>
-<section class="panel"><div class="previewtop"><div><strong>Prévia do cardápio</strong><div class="hint">Clique no texto para editá-lo diretamente</div></div><div class="toolbar"><button class="btn" onclick="zoom(-.1)">−</button><button class="btn" onclick="zoom(.1)">+</button><button class="btn primary" onclick="printMenu()">Gerar PDF / Imprimir</button></div></div><div class="paperwrap"><div id="paper" class="paper moderno"></div></div></section></main>
-<script>
-const STORAGE='injex_menu_v1'; const sample=()=>({business:'Sabor da Casa',subtitle:'Sabor de verdade em cada prato',footer:'Pedidos pelo WhatsApp: (19) 99999-9999\n@seudelivery',logo:'',template:'moderno',format:'a4',accent:'#b86720',titleSize:39,bodySize:15,categories:[{id:uid(),name:'Massas',products:[{id:uid(),name:'Macarrão à Bolonhesa',desc:'Massa artesanal, molho de tomate, carne moída e queijo ralado.',price:'32,90'},{id:uid(),name:'Macarrão ao Molho Branco',desc:'Molho cremoso, bacon e parmesão.',price:'35,90'}]},{id:uid(),name:'Bebidas',products:[{id:uid(),name:'Refrigerante lata',desc:'Consulte os sabores disponíveis.',price:'6,00'}]}]});
-function uid(){return Math.random().toString(36).slice(2,10)}; let state;try{state=JSON.parse(localStorage.getItem(STORAGE))||sample()}catch{state=sample()};let scale=1;
-function save(){try{localStorage.setItem(STORAGE,JSON.stringify(state));document.getElementById('status').textContent='Salvo automaticamente neste navegador'}catch{document.getElementById('status').textContent='Espaço insuficiente: use “Salvar projeto”'}}function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}function field(id){return document.getElementById(id)}function setField(k,v){state[k]=v;save();renderPreview()}function setTab(name){document.querySelectorAll('.section').forEach(el=>el.classList.toggle('active',el.id===name));document.querySelectorAll('.tab').forEach(el=>el.classList.toggle('active',el.dataset.tab===name))}
-function fillControls(){['business','subtitle','footer','template','format','accent','titleSize','bodySize'].forEach(k=>field(k).value=state[k])}
-function renderCategories(){field('categories').innerHTML=state.categories.map((c,i)=>`<div class="item"><div class="itemhead"><strong>📁 Categoria ${i+1}</strong><div class="toolbar"><button class="btn smallbtn" title="Subir" onclick="moveCat(${i},-1)">↑</button><button class="btn smallbtn" title="Descer" onclick="moveCat(${i},1)">↓</button><button class="btn smallbtn danger" onclick="deleteCat(${i})">Excluir</button></div></div><label>Nome da categoria</label><input value="${esc(c.name)}" oninput="editCat(${i},this.value)">${c.products.map((p,j)=>`<div class="item" style="background:white"><div class="itemhead"><strong>Produto ${j+1}</strong><div class="toolbar"><button class="btn smallbtn" onclick="moveProduct(${i},${j},-1)">↑</button><button class="btn smallbtn" onclick="moveProduct(${i},${j},1)">↓</button><button class="btn smallbtn danger" onclick="deleteProduct(${i},${j})">✕</button></div></div><label>Nome</label><input value="${esc(p.name)}" oninput="editProduct(${i},${j},'name',this.value)"><label>Ingredientes / descrição</label><textarea oninput="editProduct(${i},${j},'desc',this.value)">${esc(p.desc)}</textarea><label>Preço (R$)</label><input value="${esc(p.price)}" placeholder="32,90" oninput="editProduct(${i},${j},'price',this.value)"></div>`).join('')}<button class="btn" style="width:100%" onclick="addProduct(${i})">+ Adicionar produto</button></div>`).join('')}
-function renderPreview(){const p=field('paper');p.className='paper '+state.template+(state.format==='a5'?' a5':state.format==='square'?' square':'');p.style.setProperty('--accent',state.accent);p.style.setProperty('--title-size',state.titleSize+'px');p.style.setProperty('--body-size',state.bodySize+'px');p.style.transform=`scale(${scale})`;p.style.marginBottom=`${(scale-1)*100}%`;p.innerHTML=`<div class="menuhead">${state.logo?`<img class="logo" src="${state.logo}" alt="Logotipo">`:''}<div class="business contenteditable" contenteditable="true" data-kind="business">${esc(state.business)}</div><div class="subtitle contenteditable" contenteditable="true" data-kind="subtitle">${esc(state.subtitle)}</div></div>${state.categories.length?state.categories.map((c,i)=>`<div class="category contenteditable" contenteditable="true" data-kind="category" data-i="${i}">${esc(c.name)}</div>${c.products.map((x,j)=>`<div class="product"><div class="phead"><span class="pname contenteditable" contenteditable="true" data-kind="name" data-i="${i}" data-j="${j}">${esc(x.name)}</span><span class="price contenteditable" contenteditable="true" data-kind="price" data-i="${i}" data-j="${j}">R$ ${esc(x.price)}</span></div><div class="desc contenteditable" contenteditable="true" data-kind="desc" data-i="${i}" data-j="${j}">${esc(x.desc)}</div></div>`).join('')}`).join(''):`<div class="empty">Adicione categorias e produtos à esquerda para começar.</div>`}<div class="footer contenteditable" contenteditable="true" data-kind="footer">${esc(state.footer)}</div>`}
-field('paper').addEventListener('focusout',e=>{const t=e.target;if(!t.matches('[contenteditable]'))return;const kind=t.dataset.kind;let value=t.innerText.trim();if(kind==='price')value=value.replace(/^R\$\s*/i,'');if(kind==='category')state.categories[+t.dataset.i].name=value;else if(['name','price','desc'].includes(kind))state.categories[+t.dataset.i].products[+t.dataset.j][kind]=value;else state[kind]=value;save();fillControls();renderCategories();renderPreview()});
-function addCategory(){state.categories.push({id:uid(),name:'Nova categoria',products:[]});refresh()}function deleteCat(i){if(confirm('Excluir a categoria e todos os seus produtos?')){state.categories.splice(i,1);refresh()}}function moveCat(i,d){const n=i+d;if(n<0||n>=state.categories.length)return;[state.categories[i],state.categories[n]]=[state.categories[n],state.categories[i]];refresh()}function editCat(i,v){state.categories[i].name=v;save();renderPreview()}function addProduct(i){state.categories[i].products.push({id:uid(),name:'Novo produto',desc:'Ingredientes ou descrição do produto',price:'0,00'});refresh()}function deleteProduct(i,j){if(confirm('Excluir este produto?')){state.categories[i].products.splice(j,1);refresh()}}function moveProduct(i,j,d){const a=state.categories[i].products,n=j+d;if(n<0||n>=a.length)return;[a[j],a[n]]=[a[n],a[j]];refresh()}function editProduct(i,j,k,v){state.categories[i].products[j][k]=v;save();renderPreview()}function refresh(){save();renderCategories();renderPreview()}function uploadLogo(e){const f=e.target.files[0];if(!f)return;if(f.size>3*1024*1024){alert('Escolha um logo de até 3 MB.');return}const r=new FileReader();r.onload=()=>{state.logo=r.result;save();renderPreview()};r.readAsDataURL(f)}function removeLogo(){state.logo='';field('logoInput').value='';save();renderPreview()}function resetDesign(){Object.assign(state,{template:'moderno',format:'a4',accent:'#b86720',titleSize:39,bodySize:15});fillControls();refresh()}function loadSample(){if(confirm('Substituir o projeto atual pelo exemplo?')){state=sample();fillControls();refresh()}}function newProject(){if(confirm('Apagar este cardápio e começar um novo? Salve o projeto antes, se quiser guardá-lo.')){state={...sample(),business:'',subtitle:'',footer:'',logo:'',categories:[]};fillControls();refresh();setTab('cadastro')}}function zoom(delta){scale=Math.max(.6,Math.min(1.3,+(scale+delta).toFixed(1)));renderPreview()}function exportData(){const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cardapio-'+(state.business||'projeto').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-')+'.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)}function importData(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const v=JSON.parse(r.result);if(!Array.isArray(v.categories)||typeof v.business!=='string')throw Error('invalido');state={...sample(),...v};fillControls();refresh();alert('Projeto carregado!')}catch{alert('Este arquivo não é um projeto válido do gerador.')}e.target.value=''};r.readAsText(f)}function printMenu(){const sizes={a4:'A4',a5:'A5',square:'180mm 180mm'};document.getElementById('printPageSize').textContent='@page{size:'+sizes[state.format]+';margin:0}';const old=scale;scale=1;renderPreview();window.print();scale=old;renderPreview()}
-fillControls();renderCategories();renderPreview();save();
-</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light">
+  <title>Injex Studio | Gerador de Cardápios</title>
+  <style id="pageRules">@page { size: A4; margin: 12mm; }</style>
+  <style>
+    /* =========================================================
+       INJEX STUDIO — VARIÁVEIS E ESTRUTURA
+       Edite os estilos dos cardápios na seção "MODELOS".
+       ========================================================= */
+    :root {
+      --ui-bg: #f3f5f9;
+      --ui-ink: #192439;
+      --ui-soft: #637089;
+      --ui-border: #dfe5ed;
+      --ui-brand: #222b45;
+      --accent: #b76b3a;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--ui-bg); color: var(--ui-ink); font-family: Inter, "Segoe UI", Arial, sans-serif; }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:disabled { opacity: .45; cursor: not-allowed; }
+    input, select, textarea { width: 100%; padding: 11px 12px; background: #fff; border: 1px solid #cfd7e2; border-radius: 10px; color: #1b2940; }
+    textarea { resize: vertical; min-height: 72px; }
+    input[type="color"] { padding: 3px; height: 44px; }
+    input[type="checkbox"] { width: auto; accent-color: #283650; }
+    input:focus, textarea:focus, select:focus { outline: 2px solid #bdcdec; outline-offset: 1px; }
+    label { font-size: 12px; color: #3b4a60; font-weight: 750; display: block; margin: 11px 0 5px; }
+    .topbar { display: flex; align-items: center; gap: 13px; flex-wrap: wrap; justify-content: space-between; padding: 14px 22px; background: #121c30; color: white; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark { background: #dca36f; color: #1e2632; width: 43px; height: 43px; display: grid; place-items: center; border-radius: 12px; font-size: 23px; }
+    .brand strong { display: block; letter-spacing: .5px; font-size: 18px; }
+    .brand small { color: #b6c5da; display: block; margin-top: 2px; }
+    .top-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn { border: 1px solid #d2dae6; border-radius: 10px; background: white; color: #21314b; font-size: 13px; font-weight: 750; padding: 10px 13px; transition: .15s ease; }
+    .btn:hover { filter: brightness(.95); transform: translateY(-1px); }
+    .btn.primary { background: #f1bd81; color: #19253a; border-color: #f1bd81; }
+    .btn.dark { background: #273651; color: white; border-color: #273651; }
+    .btn.red { color: #ae2636; }
+    .btn.tiny { font-size: 12px; padding: 7px 9px; }
+    .app { max-width: 1850px; margin: 0 auto; display: grid; grid-template-columns: minmax(340px, 455px) minmax(0, 1fr); gap: 18px; padding: 18px; align-items: start; }
+    .editor { position: sticky; top: 15px; max-height: calc(100vh - 95px); overflow: auto; padding: 18px; }
+    .panel { background: #fff; border: 1px solid var(--ui-border); border-radius: 18px; box-shadow: 0 6px 25px #1c355012; }
+    .tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 5px; background: #eef2f7; border-radius: 13px; margin: 16px 0 19px; }
+    .tab { border: 0; padding: 10px 4px; border-radius: 10px; background: transparent; color: #5d6a80; font-size: 12px; font-weight: 850; }
+    .tab.active { color: #1e2e48; background: #fff; box-shadow: 0 2px 10px #25314915; }
+    .pane { display: none; }
+    .pane.active { display: block; }
+    .section-title { font-size: 15px; margin: 18px 0 5px; font-weight: 850; }
+    .hint { color: #768298; font-size: 12px; line-height: 1.55; margin: 7px 0 12px; }
+    .fields-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .fields-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+    .divider { height: 1px; background: #edf0f4; margin: 17px 0; }
+    .inline-actions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .control-row { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .switch-line { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #39485c; }
+    .category-box { background: #f9fafc; border: 1px solid #e2e7ef; border-radius: 13px; padding: 12px; margin: 13px 0; }
+    .category-head { display: flex; align-items: center; gap: 8px; }
+    .category-head input { font-weight: 850; flex: 1; min-width: 0; }
+    .product-box { background: white; border-radius: 10px; border: 1px solid #e7ebf2; padding: 11px; margin: 9px 0; }
+    .product-name { font-weight: 750; }
+    .model-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .model-button { text-align: left; padding: 8px; border: 2px solid #e3e8f0; border-radius: 12px; background: white; }
+    .model-button.selected { border-color: #243551; background: #f4f7fc; }
+    .model-button strong { display: block; font-size: 12px; padding: 7px 3px 2px; }
+    .model-button span { color: #68768b; font-size: 11px; padding: 0 3px; }
+    .model-thumb { height: 82px; border-radius: 7px; padding: 11px; overflow: hidden; background: var(--thumb-bg); color: var(--thumb-text); }
+    .model-thumb::before { content: "SABOR & ARTE"; display: block; font: 900 13px Georgia, serif; text-align: center; border-bottom: 2px solid var(--thumb-accent); padding-bottom: 6px; }
+    .model-thumb::after { content: "ESPECIAL DA CASA          39,90\A Ingredientes selecionados"; display: block; white-space: pre; font-size: 7px; line-height: 2.3; margin-top: 5px; }
+    .workspace { min-width: 0; }
+    .workspace-heading { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; padding: 12px 14px; gap: 9px; }
+    .workspace-heading h2 { margin: 0; font-size: 15px; }
+    .workspace-heading p { margin: 4px 0 0; font-size: 12px; color: #758197; }
+    .workspace-body { display: flex; justify-content: center; padding: 28px 20px 50px; background: #dfe5ec; overflow-x: auto; border-radius: 0 0 18px 18px; min-height: 740px; }
+    .paper-frame { flex: 0 0 auto; width: min(100%, 794px); }
+
+    /* =========================================================
+       ÁREA DO CARDÁPIO (TAMBÉM USADA NO PDF)
+       ========================================================= */
+    .menu { --menu-bg: #fff; --menu-ink: #272b35; --menu-muted: #667085; --menu-accent: #b76b3a; --menu-font: Georgia, serif; --menu-title: Georgia, serif; background: var(--menu-bg); color: var(--menu-ink); font-family: var(--menu-font); padding: 15mm 14mm; width: 100%; min-height: 280mm; box-shadow: 0 7px 25px #26354b2b; position: relative; overflow-wrap: anywhere; }
+    .menu::before { content: ""; position: absolute; inset: 0; pointer-events: none; }
+    .menu-content { position: relative; z-index: 1; }
+    .menu-header { text-align: center; margin-bottom: 32px; break-inside: avoid; page-break-inside: avoid; }
+    .menu-logo { display: block; margin: 0 auto 15px; max-width: 120px; max-height: 95px; object-fit: contain; }
+    .menu-title { font-family: var(--menu-title); font-size: var(--title-size, 35px); font-weight: 800; letter-spacing: .03em; line-height: 1.15; margin: 0; }
+    .menu-subtitle { color: var(--menu-muted); font-size: 13px; margin: 10px 0; letter-spacing: .14em; text-transform: uppercase; }
+    .menu-separator { width: 75px; height: 3px; margin: 14px auto 0; background: var(--menu-accent); }
+    .menu-category { margin: 25px 0 0; }
+    .menu-category h2 { color: var(--menu-accent); font-family: var(--menu-title); font-size: var(--category-size, 23px); font-weight: 900; letter-spacing: .045em; text-transform: uppercase; border-bottom: 1px solid var(--menu-accent); padding-bottom: 8px; margin: 0 0 13px; break-after: avoid; page-break-after: avoid; }
+    .menu-product { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; break-inside: avoid; page-break-inside: avoid; }
+    .menu-product-main { flex: 1; min-width: 0; }
+    .menu-product-name { font-size: var(--item-size, 16px); font-weight: 800; margin-bottom: 5px; }
+    .menu-product-description { font-size: var(--desc-size, 12px); line-height: 1.6; color: var(--menu-muted); white-space: pre-line; }
+    .menu-product-price { color: var(--menu-accent); font-size: var(--item-size, 16px); font-weight: 900; white-space: nowrap; padding-top: 1px; }
+    .menu-footer { margin-top: 36px; text-align: center; font-size: 11px; line-height: 1.7; color: var(--menu-muted); padding-top: 14px; border-top: 1px solid var(--menu-accent); break-inside: avoid; }
+    [contenteditable="true"] { outline-offset: 2px; border-radius: 3px; }
+    [contenteditable="true"]:focus { outline: 2px dashed var(--menu-accent); }
+
+    /* =========================================================
+       MODELOS — 8 IDENTIDADES VISUAIS
+       ========================================================= */
+    .menu[data-model="1"] { --menu-bg: #fffdfa; --menu-ink: #302820; --menu-muted: #77695f; --menu-accent: #b56b3c; --menu-font: Georgia, serif; --menu-title: Georgia, serif; }
+    .menu[data-model="2"] { --menu-bg: #101920; --menu-ink: #f6edda; --menu-muted: #c1b6a0; --menu-accent: #d6ac67; --menu-font: Georgia, serif; --menu-title: Georgia, serif; }
+    .menu[data-model="3"] { --menu-bg: #fff; --menu-ink: #202d3a; --menu-muted: #647486; --menu-accent: #3181a3; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: "Segoe UI", Arial, sans-serif; }
+    .menu[data-model="4"] { --menu-bg: #fdf1e3; --menu-ink: #4a2417; --menu-muted: #876958; --menu-accent: #d45527; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: Georgia, serif; }
+    .menu[data-model="5"] { --menu-bg: #f7f5ee; --menu-ink: #273b32; --menu-muted: #69796e; --menu-accent: #3f7455; --menu-font: Georgia, serif; --menu-title: Georgia, serif; }
+    .menu[data-model="6"] { --menu-bg: #fffafc; --menu-ink: #473446; --menu-muted: #8c7284; --menu-accent: #ae6d93; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: Georgia, serif; }
+    .menu[data-model="7"] { --menu-bg: #1a1717; --menu-ink: #fff3e2; --menu-muted: #bdaba1; --menu-accent: #ed6348; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: "Segoe UI", Arial, sans-serif; }
+    .menu[data-model="8"] { --menu-bg: #f8f8f6; --menu-ink: #151515; --menu-muted: #656565; --menu-accent: #151515; --menu-font: "Segoe UI", Arial, sans-serif; --menu-title: "Segoe UI", Arial, sans-serif; }
+    .menu[data-model="2"]::before, .menu[data-model="7"]::before { border: 1px solid var(--menu-accent); inset: 9mm; }
+    .menu[data-model="4"] .menu-title, .menu[data-model="7"] .menu-title { text-transform: uppercase; letter-spacing: .075em; }
+    .menu[data-model="5"] .menu-header::after { content: "✦ ✦ ✦"; color: var(--menu-accent); display: block; margin-top: 11px; }
+    .menu[data-model="6"] .menu-category h2 { text-align: center; border: 0; }
+    .menu[data-model="6"] .menu-category h2::after { content: ""; width: 70px; height: 1px; display: block; background: var(--menu-accent); margin: 8px auto 0; }
+    .menu[data-model="8"] .menu-separator { width: 100%; height: 1px; }
+    .menu[data-model="8"] .menu-category h2 { letter-spacing: .14em; }
+    .menu.two-columns .menu-items { columns: 2; column-gap: 24px; }
+    .menu.two-columns .menu-product { display: flex; break-inside: avoid; }
+    .menu.two-columns .menu-product-price { white-space: nowrap; }
+    .menu.compact .menu-product { padding: 5px 0; }
+    .menu.compact .menu-category { margin-top: 14px; }
+    .menu.show-divider .menu-product { border-bottom: 1px solid color-mix(in srgb, var(--menu-accent) 24%, transparent); }
+
+    /* =========================================================
+       RESPONSIVO E IMPRESSÃO
+       ========================================================= */
+    @media (max-width: 980px) {
+      .app { grid-template-columns: 1fr; }
+      .editor { position: static; max-height: none; }
+    }
+    @media (max-width: 540px) {
+      .app { padding: 9px; gap: 9px; }
+      .editor { padding: 12px; }
+      .topbar { padding: 12px; }
+      .workspace-body { padding: 10px 4px 20px; }
+      .menu { padding: 9mm 7mm; min-height: 0; }
+      .menu-title { font-size: 25px !important; }
+      .menu.two-columns .menu-items { columns: 1; }
+    }
+    @media print {
+      html, body { width: auto !important; margin: 0 !important; padding: 0 !important; background: transparent !important; }
+      .topbar, .editor, .workspace-heading { display: none !important; }
+      .app, .workspace, .panel, .workspace-body, .paper-frame { display: block !important; width: auto !important; max-width: none !important; min-height: 0 !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; border: 0 !important; box-shadow: none !important; background: transparent !important; }
+      .menu { width: 100% !important; min-height: 0 !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .menu::before { inset: 0 !important; }
+      .menu-header { margin-top: 3mm; }
+      [contenteditable="true"] { outline: 0 !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">✦</div>
+      <div><strong>INJEX STUDIO</strong><small>Gerador profissional de cardápios</small></div>
+    </div>
+    <div class="top-actions">
+      <button class="btn" id="saveProject">↓ Salvar projeto</button>
+      <button class="btn" id="openProject">↑ Abrir projeto</button>
+      <button class="btn primary" id="printTop">▣ Gerar PDF / Imprimir</button>
+      <input type="file" id="projectFile" accept=".json,application/json" hidden>
+    </div>
+  </header>
+
+  <main class="app">
+    <aside class="panel editor">
+      <strong style="font-size:17px">Criador de cardápios</strong>
+      <p class="hint">Preencha os dados, escolha um modelo e edite os textos clicando na prévia.</p>
+      <nav class="tabs" aria-label="Etapas do editor">
+        <button class="tab active" data-tab="content">1. Conteúdo</button>
+        <button class="tab" data-tab="design">2. Modelos</button>
+        <button class="tab" data-tab="settings">3. Impressão</button>
+      </nav>
+
+      <section class="pane active" id="tab-content">
+        <div class="section-title">Estabelecimento</div>
+        <label for="businessName">Nome da empresa</label>
+        <input id="businessName" placeholder="Ex.: Sabor da Casa" maxlength="120">
+        <label for="businessSubtitle">Chamada / subtítulo</label>
+        <input id="businessSubtitle" placeholder="Ex.: Comida feita com amor">
+        <label for="businessFooter">Rodapé (telefone, endereço, Instagram...)</label>
+        <textarea id="businessFooter" placeholder="Pedidos: (19) 99999-9999"></textarea>
+        <label for="logoFile">Logotipo (PNG, JPEG, WEBP)</label>
+        <input type="file" id="logoFile" accept="image/png,image/jpeg,image/webp">
+        <div class="inline-actions"><button class="btn tiny" id="removeLogo">Remover logotipo</button></div>
+        <div class="divider"></div>
+        <div class="control-row"><div class="section-title">Categorias e produtos</div><button class="btn tiny dark" id="addCategory">+ Categoria</button></div>
+        <p class="hint">Adicione quantas categorias quiser. Use ↑ e ↓ para definir a ordem.</p>
+        <div id="categoriesEditor"></div>
+        <div class="divider"></div>
+        <div class="inline-actions">
+          <button class="btn tiny" id="loadExample">Carregar exemplo</button>
+          <button class="btn tiny red" id="clearProject">Limpar cardápio</button>
+        </div>
+      </section>
+
+      <section class="pane" id="tab-design">
+        <div class="section-title">Escolha um modelo</div>
+        <p class="hint">O conteúdo será mantido quando você mudar o estilo.</p>
+        <div id="modelGrid" class="model-grid"></div>
+        <div class="divider"></div>
+        <div class="section-title">Ajustes visuais</div>
+        <label for="accentColor">Cor de destaque (personalizada)</label>
+        <div class="fields-2">
+          <input type="color" id="accentColor" value="#b76b3a">
+          <button class="btn tiny" id="resetAccent">Usar cor do modelo</button>
+        </div>
+        <div class="fields-2">
+          <div><label for="titleSize">Tamanho do título</label><input type="number" id="titleSize" min="20" max="70" value="35"></div>
+          <div><label for="itemSize">Tamanho do produto</label><input type="number" id="itemSize" min="11" max="28" value="16"></div>
+        </div>
+        <div class="fields-2">
+          <div><label for="categorySize">Tamanho da categoria</label><input type="number" id="categorySize" min="14" max="42" value="23"></div>
+          <div><label for="descriptionSize">Tamanho dos ingredientes</label><input type="number" id="descriptionSize" min="9" max="22" value="12"></div>
+        </div>
+        <label class="switch-line"><input type="checkbox" id="twoColumns"> Produtos em duas colunas</label>
+        <label class="switch-line"><input type="checkbox" id="compact"> Espaçamento compacto</label>
+        <label class="switch-line"><input type="checkbox" id="dividers"> Linhas entre produtos</label>
+      </section>
+
+      <section class="pane" id="tab-settings">
+        <div class="section-title">PDF para impressão</div>
+        <p class="hint">O arquivo PDF é gerado pelo recurso de impressão do seu navegador. Na janela que abrir, escolha “Salvar como PDF”.</p>
+        <label for="pageSize">Tamanho da folha</label>
+        <select id="pageSize">
+          <option value="A4">A4 — 210 × 297 mm</option>
+          <option value="A5">A5 — 148 × 210 mm</option>
+          <option value="A3">A3 — 297 × 420 mm</option>
+          <option value="Letter">Carta — 216 × 279 mm</option>
+        </select>
+        <label class="switch-line"><input id="backgroundNote" type="checkbox" checked> Lembrar de habilitar gráficos de fundo ao imprimir</label>
+        <div class="divider"></div>
+        <div class="section-title">Como gerar corretamente</div>
+        <p class="hint">1. Clique em <b>Gerar PDF / Imprimir</b>.<br>2. Destino: <b>Salvar como PDF</b>.<br>3. Margens: <b>Nenhuma</b> ou <b>Padrão</b> conforme a prévia.<br>4. Ative <b>Gráficos de plano de fundo</b> para preservar as cores.<br>5. Confira as páginas antes de salvar.</p>
+        <p class="hint"><b>Para gráfica:</b> confirme com a gráfica sangria, CMYK e tamanho final. O PDF criado pelo navegador costuma sair em RGB e não substitui automaticamente um PDF gráfico profissional.</p>
+        <div class="divider"></div>
+        <button class="btn primary" id="printInside" style="width:100%">▣ Gerar PDF / Imprimir</button>
+      </section>
+    </aside>
+
+    <section class="workspace panel">
+      <div class="workspace-heading">
+        <div><h2>Pré-visualização em tempo real</h2><p>Clique no título, descrições ou preços para editar diretamente na folha.</p></div>
+        <button class="btn primary" id="printPreview">▣ Gerar PDF</button>
+      </div>
+      <div class="workspace-body">
+        <div class="paper-frame" id="paperFrame">
+          <article class="menu" id="menu" data-model="1">
+            <div class="menu-content" id="menuContent"></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    "use strict";
+
+    /* =========================================================
+       DADOS E MODELOS
+       ========================================================= */
+    const STORAGE_KEY = "injex_cardapios_v2";
+    const MODELS = [
+      { id: 1, name: "Clássico", detail: "Bege e cobre", bg: "#fffdfa", ink: "#302820", accent: "#b56b3c" },
+      { id: 2, name: "Luxo", detail: "Preto e dourado", bg: "#101920", ink: "#f6edda", accent: "#d6ac67" },
+      { id: 3, name: "Moderno", detail: "Branco e azul", bg: "#ffffff", ink: "#202d3a", accent: "#3181a3" },
+      { id: 4, name: "Hamburgueria", detail: "Creme e laranja", bg: "#fdf1e3", ink: "#4a2417", accent: "#d45527" },
+      { id: 5, name: "Natural", detail: "Verde orgânico", bg: "#f7f5ee", ink: "#273b32", accent: "#3f7455" },
+      { id: 6, name: "Confeitaria", detail: "Rosa delicado", bg: "#fffafc", ink: "#473446", accent: "#ae6d93" },
+      { id: 7, name: "Street Food", detail: "Grafite e coral", bg: "#1a1717", ink: "#fff3e2", accent: "#ed6348" },
+      { id: 8, name: "Minimalista", detail: "Preto e branco", bg: "#f8f8f6", ink: "#151515", accent: "#151515" }
+    ];
+
+    const sample = () => ({
+      businessName: "SABOR & ARTE",
+      subtitle: "Uma experiência deliciosa",
+      footer: "Faça seu pedido • (19) 99999-9999 • @saborearte",
+      logo: "",
+      model: 1,
+      accentOverride: "",
+      titleSize: 35,
+      itemSize: 16,
+      categorySize: 23,
+      descriptionSize: 12,
+      twoColumns: false,
+      compact: false,
+      dividers: false,
+      pageSize: "A4",
+      categories: [
+        { id: uid(), name: "Lanches especiais", products: [
+          { id: uid(), name: "Burger da Casa", description: "Pão brioche, hambúrguer artesanal, queijo, alface e molho especial.", price: "32,90" },
+          { id: uid(), name: "Burger Duplo", description: "Dois hambúrgueres, cheddar, bacon crocante e cebola caramelizada.", price: "39,90" }
+        ] },
+        { id: uid(), name: "Massas", products: [
+          { id: uid(), name: "Macarrão à Bolonhesa", description: "Massa artesanal, molho de tomate, carne moída e parmesão.", price: "35,00" },
+          { id: uid(), name: "Penne ao Molho Branco", description: "Penne, molho branco cremoso, frango e queijo gratinado.", price: "37,00" }
+        ] },
+        { id: uid(), name: "Bebidas", products: [
+          { id: uid(), name: "Refrigerante lata", description: "Consulte os sabores disponíveis.", price: "7,00" },
+          { id: uid(), name: "Suco natural", description: "Feito na hora com frutas selecionadas.", price: "11,00" }
+        ] }
+      ]
+    });
+
+    function uid() {
+      return "i" + Math.random().toString(36).slice(2, 10);
+    }
+
+    function loadInitialState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        if (saved && Array.isArray(saved.categories)) return saved;
+      } catch (error) {
+        console.warn("Não foi possível abrir os dados salvos.", error);
+      }
+      return sample();
+    }
+
+    let state = loadInitialState();
+    const $ = (id) => document.getElementById(id);
+
+    function escapeHTML(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      })[character]);
+    }
+
+    function saveLocally() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+      catch (error) { console.warn("Armazenamento local cheio ou indisponível.", error); }
+    }
+
+    function update() {
+      saveLocally();
+      renderPreview();
+    }
+
+    /* =========================================================
+       CONTROLES E CATEGORIAS
+       ========================================================= */
+    function syncControls() {
+      const fields = {
+        businessName: "businessName", businessSubtitle: "subtitle", businessFooter: "footer",
+        titleSize: "titleSize", itemSize: "itemSize", categorySize: "categorySize",
+        descriptionSize: "descriptionSize", pageSize: "pageSize", twoColumns: "twoColumns",
+        compact: "compact", dividers: "dividers"
+      };
+
+      for (const [inputId, key] of Object.entries(fields)) {
+        const input = $(inputId);
+        if (input.type === "checkbox") input.checked = Boolean(state[key]);
+        else input.value = state[key] ?? "";
+      }
+      $("accentColor").value = state.accentOverride || MODELS.find((m) => m.id === state.model)?.accent || "#b76b3a";
+    }
+
+    function renderEditor() {
+      const container = $("categoriesEditor");
+      container.innerHTML = state.categories.map((category, ci) => `
+        <div class="category-box">
+          <div class="category-head">
+            <input aria-label="Nome da categoria" data-cat="${ci}" data-field="name" value="${escapeHTML(category.name)}">
+            <button class="btn tiny" data-action="cat-up" data-ci="${ci}" title="Subir">↑</button>
+            <button class="btn tiny" data-action="cat-down" data-ci="${ci}" title="Descer">↓</button>
+            <button class="btn tiny red" data-action="cat-delete" data-ci="${ci}" title="Excluir">×</button>
+          </div>
+          ${category.products.map((product, pi) => `
+            <div class="product-box">
+              <label>Produto</label>
+              <input class="product-name" data-ci="${ci}" data-pi="${pi}" data-field="name" value="${escapeHTML(product.name)}" placeholder="Nome do produto">
+              <label>Ingredientes / descrição</label>
+              <textarea data-ci="${ci}" data-pi="${pi}" data-field="description" placeholder="Ingredientes e descrição">${escapeHTML(product.description)}</textarea>
+              <div class="fields-2">
+                <div><label>Preço (R$)</label><input data-ci="${ci}" data-pi="${pi}" data-field="price" value="${escapeHTML(product.price)}" placeholder="29,90"></div>
+                <div>
+                  <label>Organização</label>
+                  <div class="inline-actions" style="margin:0">
+                    <button class="btn tiny" data-action="prod-up" data-ci="${ci}" data-pi="${pi}" title="Subir">↑</button>
+                    <button class="btn tiny" data-action="prod-down" data-ci="${ci}" data-pi="${pi}" title="Descer">↓</button>
+                    <button class="btn tiny red" data-action="prod-delete" data-ci="${ci}" data-pi="${pi}" title="Excluir">×</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `).join("")}
+          <button class="btn tiny dark" data-action="prod-add" data-ci="${ci}">+ Adicionar produto</button>
+        </div>
+      `).join("");
+    }
+
+    function moveItem(items, index, direction) {
+      const target = index + direction;
+      if (target < 0 || target >= items.length) return;
+      [items[index], items[target]] = [items[target], items[index]];
+    }
+
+    $("categoriesEditor").addEventListener("input", (event) => {
+      const field = event.target.dataset.field;
+      const ci = Number(event.target.dataset.ci);
+      const pi = event.target.dataset.pi;
+      if (!field || !Number.isInteger(ci) || !state.categories[ci]) return;
+      if (pi === undefined) state.categories[ci][field] = event.target.value;
+      else if (state.categories[ci].products[Number(pi)]) state.categories[ci].products[Number(pi)][field] = event.target.value;
+      update();
+    });
+
+    $("categoriesEditor").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-action]");
+      if (!button) return;
+      const { action } = button.dataset;
+      const ci = Number(button.dataset.ci);
+      const pi = Number(button.dataset.pi);
+      const category = state.categories[ci];
+      if (!category) return;
+
+      if (action === "cat-up") moveItem(state.categories, ci, -1);
+      if (action === "cat-down") moveItem(state.categories, ci, 1);
+      if (action === "cat-delete" && confirm(`Excluir a categoria “${category.name}” e todos os produtos?`)) state.categories.splice(ci, 1);
+      if (action === "prod-add") category.products.push({ id: uid(), name: "Novo produto", description: "", price: "0,00" });
+      if (action === "prod-up") moveItem(category.products, pi, -1);
+      if (action === "prod-down") moveItem(category.products, pi, 1);
+      if (action === "prod-delete") category.products.splice(pi, 1);
+      renderEditor();
+      update();
+    });
+
+    $("addCategory").addEventListener("click", () => {
+      state.categories.push({ id: uid(), name: "Nova categoria", products: [{ id: uid(), name: "Novo produto", description: "", price: "0,00" }] });
+      renderEditor();
+      update();
+    });
+
+    /* =========================================================
+       MODELOS E RENDERIZAÇÃO DO CARDÁPIO
+       ========================================================= */
+    function renderModels() {
+      $("modelGrid").innerHTML = MODELS.map((model) => `
+        <button class="model-button ${state.model === model.id ? "selected" : ""}" data-model-choice="${model.id}" aria-pressed="${state.model === model.id}">
+          <div class="model-thumb" style="--thumb-bg:${model.bg};--thumb-text:${model.ink};--thumb-accent:${model.accent}"></div>
+          <strong>Modelo ${model.id} — ${model.name}</strong>
+          <span>${model.detail}</span>
+        </button>
+      `).join("");
+    }
+
+    $("modelGrid").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-model-choice]");
+      if (!button) return;
+      state.model = Number(button.dataset.modelChoice);
+      state.accentOverride = "";
+      syncControls();
+      renderModels();
+      update();
+    });
+
+    function formatPrice(raw) {
+      const text = String(raw ?? "").trim();
+      if (!text) return "";
+      const withoutCurrency = text.replace(/^R\$\s*/i, "");
+      return `R$ ${withoutCurrency}`;
+    }
+
+    function renderPreview() {
+      const menu = $("menu");
+      menu.dataset.model = state.model;
+      menu.classList.toggle("two-columns", Boolean(state.twoColumns));
+      menu.classList.toggle("compact", Boolean(state.compact));
+      menu.classList.toggle("show-divider", Boolean(state.dividers));
+      menu.style.setProperty("--title-size", `${Number(state.titleSize) || 35}px`);
+      menu.style.setProperty("--category-size", `${Number(state.categorySize) || 23}px`);
+      menu.style.setProperty("--item-size", `${Number(state.itemSize) || 16}px`);
+      menu.style.setProperty("--desc-size", `${Number(state.descriptionSize) || 12}px`);
+      if (state.accentOverride) menu.style.setProperty("--menu-accent", state.accentOverride);
+      else menu.style.removeProperty("--menu-accent");
+
+      const logo = state.logo ? `<img class="menu-logo" alt="Logotipo do estabelecimento" src="${escapeHTML(state.logo)}">` : "";
+      const categories = state.categories.map((category, ci) => `
+        <section class="menu-category">
+          <h2 contenteditable="true" spellcheck="false" data-edit="category" data-ci="${ci}">${escapeHTML(category.name)}</h2>
+          <div class="menu-items">
+            ${category.products.map((product, pi) => `
+              <div class="menu-product">
+                <div class="menu-product-main">
+                  <div class="menu-product-name" contenteditable="true" spellcheck="false" data-edit="product-name" data-ci="${ci}" data-pi="${pi}">${escapeHTML(product.name)}</div>
+                  ${product.description ? `<div class="menu-product-description" contenteditable="true" spellcheck="false" data-edit="description" data-ci="${ci}" data-pi="${pi}">${escapeHTML(product.description)}</div>` : ""}
+                </div>
+                <div class="menu-product-price" contenteditable="true" spellcheck="false" data-edit="price" data-ci="${ci}" data-pi="${pi}">${escapeHTML(formatPrice(product.price))}</div>
+              </div>
+            `).join("")}
+          </div>
+        </section>
+      `).join("");
+
+      $("menuContent").innerHTML = `
+        <div class="menu-header">
+          ${logo}
+          <h1 class="menu-title" contenteditable="true" spellcheck="false" data-edit="businessName">${escapeHTML(state.businessName)}</h1>
+          ${state.subtitle ? `<p class="menu-subtitle" contenteditable="true" spellcheck="false" data-edit="subtitle">${escapeHTML(state.subtitle)}</p>` : ""}
+          <div class="menu-separator"></div>
+        </div>
+        ${categories}
+        ${state.footer ? `<footer class="menu-footer" contenteditable="true" spellcheck="false" data-edit="footer">${escapeHTML(state.footer)}</footer>` : ""}
+      `;
+      applyPageSize();
+    }
+
+    $("menuContent").addEventListener("focusout", (event) => {
+      const element = event.target.closest("[data-edit]");
+      if (!element) return;
+      const value = element.innerText.trim();
+      const ci = Number(element.dataset.ci);
+      const pi = Number(element.dataset.pi);
+      const type = element.dataset.edit;
+      if (type === "businessName") state.businessName = value;
+      if (type === "subtitle") state.subtitle = value;
+      if (type === "footer") state.footer = value;
+      if (type === "category" && state.categories[ci]) state.categories[ci].name = value;
+      const product = state.categories[ci]?.products[pi];
+      if (product && type === "product-name") product.name = value;
+      if (product && type === "description") product.description = value;
+      if (product && type === "price") product.price = value.replace(/^R\$\s*/i, "");
+      syncControls();
+      renderEditor();
+      update();
+    });
+
+    function applyPageSize() {
+      const page = state.pageSize || "A4";
+      $("pageRules").textContent = `@page { size: ${page}; margin: 12mm; }`;
+      const widths = { A3: "1122px", A4: "794px", A5: "560px", Letter: "816px" };
+      const heights = { A3: "1587px", A4: "1123px", A5: "794px", Letter: "1056px" };
+      $("paperFrame").style.maxWidth = widths[page] || widths.A4;
+      $("menu").style.minHeight = heights[page] || heights.A4;
+    }
+
+    /* =========================================================
+       FORMULÁRIOS, IMAGENS E PROJETOS
+       ========================================================= */
+    const basicFields = {
+      businessName: "businessName", businessSubtitle: "subtitle", businessFooter: "footer",
+      titleSize: "titleSize", itemSize: "itemSize", categorySize: "categorySize",
+      descriptionSize: "descriptionSize", pageSize: "pageSize", twoColumns: "twoColumns",
+      compact: "compact", dividers: "dividers"
+    };
+
+    for (const [id, key] of Object.entries(basicFields)) {
+      $(id).addEventListener("input", (event) => {
+        const input = event.target;
+        state[key] = input.type === "checkbox" ? input.checked : input.type === "number" ? Number(input.value) : input.value;
+        update();
+      });
+    }
+
+    $("accentColor").addEventListener("input", (event) => {
+      state.accentOverride = event.target.value;
+      update();
+    });
+
+    $("resetAccent").addEventListener("click", () => {
+      state.accentOverride = "";
+      syncControls();
+      update();
+    });
+
+    $("logoFile").addEventListener("change", (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      if (!file.type.startsWith("image/")) return alert("Escolha uma imagem PNG, JPEG ou WEBP.");
+      if (file.size > 4 * 1024 * 1024) return alert("Use um logotipo de até 4 MB.");
+      const reader = new FileReader();
+      reader.onload = () => { state.logo = String(reader.result); update(); };
+      reader.readAsDataURL(file);
+    });
+
+    $("removeLogo").addEventListener("click", () => {
+      state.logo = "";
+      $("logoFile").value = "";
+      update();
+    });
+
+    $("saveProject").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const anchor = document.createElement("a");
+      anchor.href = url;
+      anchor.download = `${(state.businessName || "cardapio").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-")}-projeto.json`;
+      anchor.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    });
+
+    $("openProject").addEventListener("click", () => $("projectFile").click());
+    $("projectFile").addEventListener("change", async (event) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+      try {
+        const imported = JSON.parse(await file.text());
+        if (!Array.isArray(imported.categories)) throw new Error("Projeto inválido.");
+        state = { ...sample(), ...imported };
+        syncControls(); renderEditor(); renderModels(); update();
+        alert("Projeto aberto com sucesso!");
+      } catch (error) {
+        alert("Não foi possível abrir esse projeto JSON.");
+      }
+      event.target.value = "";
+    });
+
+    $("loadExample").addEventListener("click", () => {
+      if (!confirm("Substituir o cardápio atual pelo exemplo?")) return;
+      state = sample();
+      syncControls(); renderEditor(); renderModels(); update();
+    });
+
+    $("clearProject").addEventListener("click", () => {
+      if (!confirm("Limpar todo o cardápio atual? Salve uma cópia do projeto antes, se precisar.")) return;
+      state = { ...sample(), businessName: "NOME DO ESTABELECIMENTO", subtitle: "", footer: "", logo: "", categories: [] };
+      syncControls(); renderEditor(); renderModels(); update();
+    });
+
+    document.querySelectorAll(".tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.querySelectorAll(".tab").forEach((tab) => tab.classList.toggle("active", tab === button));
+        document.querySelectorAll(".pane").forEach((pane) => pane.classList.toggle("active", pane.id === `tab-${button.dataset.tab}`));
+      });
+    });
+
+    function printMenu() {
+      document.activeElement?.blur();
+      applyPageSize();
+      window.print();
+    }
+
+    ["printTop", "printInside", "printPreview"].forEach((id) => $(id).addEventListener("click", printMenu));
+
+    // Inicialização do aplicativo.
+    syncControls();
+    renderEditor();
+    renderModels();
+    renderPreview();
+  </script>
+</body>
+</html>
